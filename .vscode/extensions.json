@@ -1,0 +1,23 @@
+{
+    "recommendations": [
+        "EditorConfig.EditorConfig",
+        "ms-vscode.powershell",
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "hediet.vscode-drawio",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-preview-github-styles",
+        "davidanson.vscode-markdownlint",
+        "yzane.markdown-pdf",
+        "streetsidesoftware.code-spell-checker"
+    ],
+
+    "unwantedRecommendations": [
+        "ms-vscode-remote.remote-containers",
+        "ms-azuretools.vscode-containers",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "mechatroner.rainbow-csv",
+        "dotjoshjohnson.xml"
+    ]
+}

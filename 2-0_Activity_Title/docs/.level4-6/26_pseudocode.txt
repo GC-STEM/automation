@@ -1,0 +1,62 @@
+START task_name
+
+    # === Purpose and Assumptions ===
+    # TODO: Summarize the responsibility of this pseudocode and any assumptions,
+    # preconditions, or requirements it realizes.
+
+    # === Inputs ===
+    # TODO: Identify input values, sources, expected types/formats, and validation rules.
+
+    # === Outputs ===
+    # TODO: Identify outputs, destinations, formats, and required postconditions.
+
+    # === Constants and Configuration ===
+    # TODO: Define named constants and configuration values used by the algorithm.
+    # Example: LET MAX_RETRIES = 3
+
+    # === Data Types and Structures ===
+    # TODO: Define important records, collections, structures, or abstract data types
+    # needed to understand the algorithm.
+
+    # === Classes / Components ===
+    # TODO: Describe class or component responsibilities at a language-independent level.
+    # Delete this section if the design is procedural or classes are not relevant.
+
+    # === Helper Functions / Procedures ===
+    # TODO: Define helper operations. For each, state parameters, return/output values,
+    # preconditions, postconditions, and exceptional behavior when relevant.
+
+    # === Main Processing Logic ===
+    # TODO: Write the algorithm in clear, language-independent steps.
+    # Use structured sequence, selection, and repetition.
+    # Use LET for assignment and keyboard comparison operators such as ==, !=, <=, >=, <, >.
+
+    # TODO: Add input-validation and boundary-handling logic where required.
+
+    # TODO: Add calls to helper functions/procedures and show how intermediate
+    # results are combined.
+
+    # TODO: Add output/reporting logic and ensure required postconditions are satisfied.
+
+    # === Error / Exception / Recovery Logic ===
+    # TODO: Describe expected error conditions and the algorithm's response.
+    # Delete this section if all error handling is already clear in the main logic.
+
+    # === Cleanup / Finalization ===
+    # TODO: Describe resource release, persistence, final state updates, or other cleanup.
+    # Delete this section if not applicable.
+
+END task_name
+
+
+# === Traceability ===
+# TODO: Identify the requirements and design sections implemented by this pseudocode.
+# Example: FR-001, FR-004; design.md#component-and-module-design
+
+
+# === References ===
+# TODO: Add reference entries in the citation style required by the course for any
+# external algorithms, standards, documentation, or other sources used.
+
+# TODO: Before submitting, replace placeholders, resolve all TODO prompts, and delete
+# unused sections and TODO comment lines.
