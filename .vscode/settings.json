@@ -19,7 +19,7 @@
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
-  "files.eol": "\r\n",
+  "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.exclude": {
@@ -74,13 +74,13 @@
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
     "editor.wordWrap": "on",
-    "files.eol": "\r\n"
+    "files.eol": "\n"
   },
   "[pip-requirements]": {
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.trimAutoWhitespace": true,
-    "files.eol": "\r\n"
+    "files.eol": "\n"
   },
   "[plaintext]": {
     "editor.tabSize": 4,
@@ -90,7 +90,7 @@
       "comments": true,
       "other": true
     },
-    "files.eol": "\r\n"
+    "files.eol": "\n"
   },
   "[properties]": {
     "editor.tabSize": 2,
@@ -101,7 +101,7 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
-    "files.eol": "\r\n"
+    "files.eol": "\n"
   },
   "[shellscript]": {
     "files.eol": "\n"
@@ -209,5 +209,12 @@
     "webassets",
     "webp",
     "xfailed"
+  ],
+  "python-envs.pythonProjects": [
+    {
+      "path": ".",
+      "envManager": "ms-python.python:venv",
+      "packageManager": "ms-python.python:pip"
+    }
   ]
 }
