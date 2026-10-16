@@ -4,8 +4,24 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 
-SOURCE_FILE = Path("../../../data/raw/gc-stem_d2l_courses.xlsx")
-OUTPUT_FILE = Path("../../../data/processed/gc-stem_d2l_courses.xlsx")
+def find_project_root() -> Path:
+    """Locate the repository root using pyproject.toml."""
+    for directory in Path(__file__).resolve().parents:
+        if (directory / "pyproject.toml").is_file():
+            return directory
+
+    raise FileNotFoundError(
+        "Could not locate the project root (pyproject.toml)."
+    )
+
+
+PROJECT_ROOT = find_project_root()
+SOURCE_FILE = (
+    PROJECT_ROOT / "data" / "raw" / "gc-stem_d2l_courses.xlsx"
+)
+OUTPUT_FILE = (
+    PROJECT_ROOT / "data" / "processed" / "gc-stem_d2l_courses.xlsx"
+)
 SHEET_NAME = "D2L"
 
 
