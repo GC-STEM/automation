@@ -1,4 +1,4 @@
-# CS-000 Code Repository
+[text](tool_name)# CS-000 Code Repository
 
 > [!IMPORTANT]
 > 🚨 Do **NOT** fork or clone this repository yet! Follow the [**Setup Tasks**](#1-1-setup-tasks) instead.
@@ -76,7 +76,7 @@ You are not in this alone. If you have questions or run into problems, return to
 * [ ] Script or manual procedure to change all `/GC-STEM/cs000` to student's GitHub `/username/cs000` after cloning.
 
 * [ ] Add virtual infrastructure badges
-  
+
 <!-- url-owner: repository-owner; scope: next-link -->
 [![Open in VS Code for the Web](./.github/assets/open-in-vscode-web.svg)](https://github.dev/GC-STEM/cs000)
 
