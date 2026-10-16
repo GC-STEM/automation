@@ -1,12 +1,11 @@
-
 """Extract D2L course hyperlinks into a CourseURL worksheet column."""
 
 from pathlib import Path
 from openpyxl import load_workbook
 
 
-SOURCE_FILE = Path("gc-stem_d2l_courses.xlsx")
-OUTPUT_FILE = Path("gc-stem_d2l_courses_with_urls.xlsx")
+SOURCE_FILE = Path("../../../data/raw/gc-stem_d2l_courses.xlsx")
+OUTPUT_FILE = Path("../../../data/processed/gc-stem_d2l_courses.xlsx")
 SHEET_NAME = "D2L"
 
 
