@@ -4,18 +4,18 @@
 
 ## Table of Contents <!-- omit from toc -->
 
-* [Problem or Need](#problem-or-need)
-* [Solution Purpose](#solution-purpose)
-* [Users and Stakeholders](#users-and-stakeholders)
-* [Solution Overview](#solution-overview)
-* [Inputs](#inputs)
-* [Processing](#processing)
-* [Outputs](#outputs)
-* [Major Workflow](#major-workflow)
-* [Assumptions and Constraints](#assumptions-and-constraints)
-* [Success Criteria](#success-criteria)
-* [Related Documents](#related-documents)
-* [References](#references)
+1. [Problem or Need](#problem-or-need)
+2. [Solution Purpose](#solution-purpose)
+3. [Users and Stakeholders](#users-and-stakeholders)
+4. [Solution Overview](#solution-overview)
+5. [Inputs](#inputs)
+6. [Processing](#processing)
+7. [Outputs](#outputs)
+8. [Major Workflow](#major-workflow)
+9. [Assumptions and Constraints](#assumptions-and-constraints)
+10. [Success Criteria](#success-criteria)
+11. [Related Documents](#related-documents)
+12. [References](#references)
 
 ## Problem or Need
 
