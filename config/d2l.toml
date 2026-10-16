@@ -1,0 +1,23 @@
+[instance]
+base_url = "https://learn.snhu.edu/d2l/"
+provider = "browser"
+auth = "interactive"
+
+[courses]
+file = "data/courses.csv"
+
+[search]
+terms = ["target one", "target two"]
+mode = "dom"
+ignore_case = true
+regex = false
+
+[crawl]
+include_hidden = false
+follow_external_links = false
+delay_seconds = 1.0
+max_pages_per_course = 300
+
+[output]
+directory = "output"
+formats = ["csv", "json"]
