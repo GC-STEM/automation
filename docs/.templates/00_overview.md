@@ -11,8 +11,7 @@ Use plain language whenever possible. Avoid implementation details unless they
 are necessary to understand the solution.
 -->
 
-<!-- omit from toc -->
-## Table of Contents
+## Table of Contents <!-- omit from toc -->
 
 <!-- TODO: Generate or update the table of contents after the document is complete. -->
 

@@ -6,8 +6,7 @@
 ---
 
 {{Brief summary of what this task asks students to do and why}}. This task is {{Required | Optional}}, {{graded | ungraded}}; {{no submission required | one submission required}}.
-<!-- omit from toc -->
-## Table of Contents
+## Table of Contents <!-- omit from toc -->
 
 * [Table of Contents](#table-of-contents)
 * [Getting Started](#getting-started)

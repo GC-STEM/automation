@@ -3,8 +3,7 @@
 <!-- TODO: Replace the title placeholders with the course code, task code, and task title. -->
 
 This **Software Construction Plan (SCP)** defines how the approved design will be implemented, integrated, verified during construction, and managed as working source code and related software artifacts.
-<!-- omit from toc -->
-## Table of Contents
+## Table of Contents <!-- omit from toc -->
 
 <!-- TODO: Generate or update the table of contents after the document structure is final. -->
 

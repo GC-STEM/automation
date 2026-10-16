@@ -3,8 +3,7 @@
 <!-- TODO: Replace the title placeholders with the course code, task code, and task title. -->
 
 This **Software Test Plan (STP)** defines the scope, objectives, strategy, environments, responsibilities, criteria, evidence, and reporting used to verify and validate the software.
-<!-- omit from toc -->
-## Table of Contents
+## Table of Contents <!-- omit from toc -->
 
 <!-- TODO: Generate or update the table of contents after the document structure is final. -->
 

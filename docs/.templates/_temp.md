@@ -1,8 +1,7 @@
 # {{CS-000}} {{Task Code}} | {{Document Title}}
 
 <!-- TODO: Use this generic template only for a required project document that does not fit requirements.md, architecture.md, design.md, construction_plan.md, or test_plan.md. Rename temp.md to a descriptive filename in the course or assignment repository. -->
-<!-- omit from toc -->
-## Table of Contents
+## Table of Contents <!-- omit from toc -->
 
 <!-- TODO: Generate or update the table of contents after the document structure is final. -->
 

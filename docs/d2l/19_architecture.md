@@ -3,8 +3,7 @@
 <!-- TODO: Replace the title placeholders with the course code, task code, and task title. -->
 
 This **Software Architecture Description (SAD)** documents the fundamental organization of the software, its major elements and relationships, the architectural decisions that constrain detailed design and construction, and the rationale for those decisions.
-<!-- omit from toc -->
-## Table of Contents
+## Table of Contents <!-- omit from toc -->
 
 <!-- TODO: Generate or update the table of contents after the document structure is final. -->
 

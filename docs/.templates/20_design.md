@@ -3,8 +3,7 @@
 <!-- TODO: Replace the title placeholders with the course code, task code, and task title. -->
 
 This **Software Design Description (SDD)** transforms the approved requirements and architecture into an implementable design. It specifies the internal organization, interfaces, data structures, algorithms, control logic, and design decisions needed to construct and verify the software.
-<!-- omit from toc -->
-## Table of Contents
+## Table of Contents <!-- omit from toc -->
 
 <!-- TODO: Generate or update the table of contents after the document structure is final. -->
 
