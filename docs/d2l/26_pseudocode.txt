@@ -1,62 +1,321 @@
-START task_name
+GC-STEM D2L Automation | Search and Workbook Preparation Pseudocode
+Draft for review, 2026-10-16.
+Baseline: 196cda43adf48a8b3b74b3ea03101763bcb0f67f.
+This is planned control logic, not executable code or test evidence.
+
+START D2L_SEARCH
 
     # === Purpose and Assumptions ===
-    # TODO: Summarize the responsibility of this pseudocode and any assumptions,
-    # preconditions, or requirements it realizes.
+    # Search an explicit course list through normal browser access.
+    # Process only the declared authored-content scope.
+    # Match findings and coverage are independent.
+    # API access, regex, saved sessions, and resume are not implemented.
 
     # === Inputs ===
-    # TODO: Identify input values, sources, expected types/formats, and validation rules.
+    # Config path, supported environment values, explicit command options.
+    # Excel or CSV course inventory; nonempty literal target strings.
+    # Tool selection, visibility, representation mode, limits, output path.
+    # Interactive browser login performed directly by the operator.
 
     # === Outputs ===
-    # TODO: Identify outputs, destinations, formats, and required postconditions.
+    # matches.csv, coverage.csv, summary.json in a unique run directory.
+    # Terminal progress and process exit code.
+    # No authored-course, attempt, submission, grade, or settings changes.
 
     # === Constants and Configuration ===
-    # TODO: Define named constants and configuration values used by the algorithm.
-    # Example: LET MAX_RETRIES = 3
+    # Load configurable limits; do not embed tenant/course/user data.
+    # Proposed defaults: one active read; one-second crawl pacing;
+    # 30-second read timeout; two retries after an initial transient failure;
+    # one reauthentication opportunity per run; finite object/field limits.
+    # Reject unsupported or unsafe settings during validation.
 
     # === Data Types and Structures ===
-    # TODO: Define important records, collections, structures, or abstract data types
-    # needed to understand the algorithm.
+    # Settings, Inventory, CourseRef, ObjectRef, AuthoredField, Target,
+    # Match, ToolCoverage, CourseResult, RunSummary.
+    # Sets track visited object identities and pagination signatures.
+    # A local temporary spool holds bounded report records, not full HTML.
 
     # === Classes / Components ===
-    # TODO: Describe class or component responsibilities at a language-independent level.
-    # Delete this section if the design is procedural or classes are not relevant.
+    # Config/inventory services validate local input.
+    # BrowserReadClient authenticates and performs guarded reads.
+    # ToolAdapter enumerates one tool and reads documented authored fields.
+    # Matcher searches only normalized field representations.
+    # ReportWriter records findings/coverage and publishes output atomically.
 
     # === Helper Functions / Procedures ===
-    # TODO: Define helper operations. For each, state parameters, return/output values,
-    # preconditions, postconditions, and exceptional behavior when relevant.
+    # LOAD_AND_VALIDATE_SETTINGS preserves precedence and path origins.
+    # LOAD_COURSES validates identity, tenant, row conflicts, and duplicates.
+    # COMPILE_LITERAL_TARGETS escapes metacharacters; keeps target order.
+    # DISCOVER yields object references plus a terminal enumeration outcome.
+    # READ_WITH_RECOVERY performs only bounded, verified safe reads.
+    # MATCH_FIELD returns findings and required-representation gaps.
+    # AGGREGATE_COURSE applies coverage and match rules independently.
+    # FINALIZE_REPORTS publishes requested CSV files before summary.json.
 
     # === Main Processing Logic ===
-    # TODO: Write the algorithm in clear, language-independent steps.
-    # Use structured sequence, selection, and repetition.
-    # Use LET for assignment and keyboard comparison operators such as ==, !=, <=, >=, <, >.
+    LET browser = NONE
+    LET writer = NONE
+    LET run_state = FAILED
+    LET exit_code = 1
 
-    # TODO: Add input-validation and boundary-handling logic where required.
+    TRY
+        LET settings = LOAD_AND_VALIDATE_SETTINGS(
+            explicit_options, supported_environment, selected_config, defaults
+        )
+        LET inventory = LOAD_COURSES(settings)
+        LET search_plan = COMPILE_LITERAL_TARGETS(settings.search)
+        VERIFY output location is creatable without overwriting a prior run
+        VERIFY at least one validated course and one selected tool exist
 
-    # TODO: Add calls to helper functions/procedures and show how intermediate
-    # results are combined.
+        IF validation_only == TRUE
+            DISPLAY redacted validation summary
+            RETURN 0
+        END IF
 
-    # TODO: Add output/reporting logic and ensure required postconditions are satisfied.
+        LET writer = START_UNIQUE_REPORT_RUN(
+            settings, inventory_digest, software_identity, current_UTC_time
+        )
+        LET browser = OPEN_BROWSER_READ_CLIENT(settings)
+        REQUEST operator to complete institutional SSO and MFA in the browser
+        VERIFY configured tenant and authenticated marker
+
+        FOR EACH course IN inventory.courses IN original_unique_order
+            REGISTER all baseline tool rows and declared exclusions
+
+            FOR EACH tool IN settings.selected_tools
+                IF cancellation_requested == TRUE
+                    RAISE OperatorCancelled
+                END IF
+
+                LET coverage = START_TOOL_COVERAGE(course, tool)
+                LET visited = EMPTY_SET
+                LET enumeration_complete = FALSE
+
+                TRY
+                    LET capability = CHECK_TOOL_CAPABILITY(course, tool)
+
+                    IF capability proves tool is not applicable
+                        SET coverage.status = NOT_APPLICABLE
+                        RECORD supporting reason
+                        CONTINUE TO next tool
+                    END IF
+
+                    IF capability is denied or unsupported
+                        RECORD required-scope failure
+                        CONTINUE TO tool finalization
+                    END IF
+
+                    FOR EACH event IN DISCOVER(course, tool)
+                        IF event is terminal enumeration outcome
+                            SET enumeration_complete = event.complete
+                            RECORD any enumeration gap
+                            CONTINUE
+                        END IF
+
+                        LET object = event.object_reference
+
+                        IF object.identity IN visited
+                            RETAIN additional containing path
+                            CONTINUE
+                        END IF
+
+                        ADD object.identity TO visited
+                        RECORD discovered object
+
+                        IF object is outside explicitly declared scope
+                            RECORD object exclusion and reason
+                            CONTINUE
+                        END IF
+
+                        IF any configured read, object, or time bound is reached
+                            RECORD LIMIT_REACHED
+                            SET enumeration_complete = FALSE
+                            BREAK discovery loop
+                        END IF
+
+                        TRY
+                            WAIT for configured crawl pacing and readiness
+                            LET read_result = READ_WITH_RECOVERY(object, browser)
+
+                            FOR EACH field IN read_result.authored_fields
+                                VERIFY field belongs to documented authored scope
+
+                                IF field exceeds configured size bound
+                                    RECORD FIELD_UNAVAILABLE and size-limit reason
+                                    CONTINUE TO next field
+                                END IF
+
+                                LET batch = MATCH_FIELD(
+                                    field, search_plan, settings.search.mode
+                                )
+                                RECORD each match in batch
+                                RECORD each requested-representation outcome
+                                RELEASE field representation strings
+                            END FOR
+
+                            RECORD explicit missing/unavailable fields
+                            CLASSIFY object as fully scanned or failed/partial
+                        CATCH scoped access, unsupported-view, or read failure
+                            RECORD object failure and sanitized reason
+                            CONTINUE TO next independently readable object
+                        END TRY
+                    END FOR
+
+                    IF no trustworthy terminal enumeration outcome was received
+                        SET enumeration_complete = FALSE
+                        RECORD ENUMERATION_INCOMPLETE
+                    END IF
+                CATCH tool-scoped discovery failure
+                    RECORD failure without converting it to an empty tool
+                FINALLY
+                    SAVE tool counts, outcomes, reasons, and end time
+                    CLASSIFY tool coverage from evidence
+                END TRY
+            END FOR
+
+            LET course_result = AGGREGATE_COURSE(course)
+
+            IF course has at least one match
+                SET course_result.match_status = FOUND
+            ELSE IF course_result.coverage_status == COMPLETE
+                SET course_result.match_status = NOT_FOUND
+            ELSE
+                SET course_result.match_status = UNKNOWN
+            END IF
+
+            RECORD course_result
+        END FOR
+
+        IF every course has COMPLETE declared coverage
+            LET run_state = COMPLETE
+            LET exit_code = 0
+        ELSE
+            LET run_state = PARTIAL
+            LET exit_code = 3
+        END IF
 
     # === Error / Exception / Recovery Logic ===
-    # TODO: Describe expected error conditions and the algorithm's response.
-    # Delete this section if all error handling is already clear in the main logic.
+    CATCH ConfigurationError OR InventoryError
+        DISPLAY specific local validation failure
+        LET exit_code = 2
+    CATCH OperatorCancelled
+        LET run_state = CANCELLED
+        MARK current and unstarted scope unfinished
+        LET exit_code = 130
+    CATCH authentication failure OR unsafe action OR fatal run error
+        LET run_state = FAILED
+        MARK current and unstarted scope unfinished
+        RECORD sanitized fatal reason when writer exists
+        LET exit_code = 1
 
     # === Cleanup / Finalization ===
-    # TODO: Describe resource release, persistence, final state updates, or other cleanup.
-    # Delete this section if not applicable.
+    FINALLY
+        IF browser exists
+            TRY to close browser context and session resources
+            RECORD sanitized cleanup trouble without skipping report finalization
+        END IF
 
-END task_name
+        IF writer exists
+            TRY
+                FINALIZE_REPORTS(writer, run_state)
+                DISPLAY only paths actually finalized
+            CATCH output failure
+                DISPLAY failure and any recoverable partial artifact paths
+                LET exit_code = 1
+            FINALLY
+                CLOSE writer and remove temporary spool when safe
+            END TRY
+        END IF
+    END TRY
+
+    RETURN exit_code
+
+END D2L_SEARCH
+
+
+START READ_WITH_RECOVERY(object, browser)
+
+    LET transient_retries = 0
+
+    REPEAT
+        TRY
+            VERIFY next action and request are approved read behavior
+            RETURN browser.READ_OBJECT(object)
+        CATCH AuthenticationRequired
+            IF run reauthentication budget is exhausted
+                RAISE AuthenticationFailed
+            END IF
+            SUSPEND crawl activity
+            REQUEST interactive reauthentication within configured timeout
+            VERIFY tenant and authenticated marker again
+            DECREMENT remaining run reauthentication budget
+            # Retry only the unfinished safe read, keeping completed identities.
+        CATCH retryable transient read failure
+            IF transient_retries >= configured max_retries
+                RAISE ReadFailed
+            END IF
+            IF service cooldown exceeds configured maximum wait
+                RAISE ReadFailed with cooldown reason
+            END IF
+            WAIT required cooldown/backoff and normal pacing
+            INCREMENT transient_retries
+        CATCH access denied, unsupported view, invalid data, unsafe action
+            RAISE without retry
+        END TRY
+    END REPEAT
+
+END READ_WITH_RECOVERY
+
+
+START PREPARE_COURSE_URLS
+
+    # Inputs: source workbook, destination workbook, configured worksheet,
+    # configured CourseName/CourseURL headers, explicit overwrite choice.
+    # Output: processed workbook and number of hyperlink targets copied.
+
+    VALIDATE source exists, sheet exists, headers are unique and usable
+    VALIDATE source/destination identity and overwrite choice
+    OPEN workbook with features appropriate to the supported XLSX contract
+
+    FIND CourseName header
+    IF CourseName header is missing
+        RAISE InventoryError
+    END IF
+
+    FIND CourseURL header
+    IF CourseURL header is missing
+        ADD CourseURL at the end of the header row
+    END IF
+
+    LET copied_count = 0
+
+    FOR EACH data row
+        LET hyperlink = CourseName cell's external hyperlink object
+        IF hyperlink exists AND hyperlink has a nonempty target
+            COPY target to the row's CourseURL cell
+            INCREMENT copied_count
+        END IF
+        # No target: preserve the existing CourseURL cell.
+        # Do not infer URLs from formula text or internal hyperlink locations.
+    END FOR
+
+    CREATE destination parent directory if needed
+    SAVE workbook to a temporary file in destination directory
+    REPLACE destination only after successful save
+    CLOSE workbook and clean temporary file
+    RETURN copied_count and destination
+
+END PREPARE_COURSE_URLS
 
 
 # === Traceability ===
-# TODO: Identify the requirements and design sections implemented by this pseudocode.
-# Example: FR-001, FR-004; design.md#component-and-module-design
-
+# Search: FR-001–FR-003, FR-005–FR-021; NFR-001–NFR-012.
+# Workbook: FR-004; NFR-007, NFR-009.
+# Architecture: ADR-001–ADR-008.
+# Design: 20_design.md, component contracts, modes, states, and file schema.
+# Verification: 40_testing.md, TC-001–TC-027.
 
 # === References ===
-# TODO: Add reference entries in the citation style required by the course for any
-# external algorithms, standards, documentation, or other sources used.
-
-# TODO: Before submitting, replace placeholders, resolve all TODO prompts, and delete
-# unused sections and TODO comment lines.
+# Project discussions and source baseline: README.md.
+# Detailed behavioral contract: 20_design.md.
+# This pseudocode defines project logic; it is not copied from an external algorithm.

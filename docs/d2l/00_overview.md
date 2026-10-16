@@ -1,234 +1,159 @@
 # GC-STEM D2L Automation | Software Solution Overview
 
-<!--
-This document provides a concise, nontechnical overview of the software solution.
-
-Write for a reader who may not have a software development background. Focus on
-what problem the software addresses, what the software does, and how the major
-parts of the solution work together.
-
-Use plain language whenever possible. Avoid implementation details unless they
-are necessary to understand the solution.
--->
+> **Draft for review.** Browser-first, broader course-tool search. The full search tool is proposed; the existing workbook utility is the current implementation.
 
 ## Table of Contents <!-- omit from toc -->
 
-<!-- TODO: Generate or update the table of contents after the document is complete. -->
+* [Problem or Need](#problem-or-need)
+* [Solution Purpose](#solution-purpose)
+* [Users and Stakeholders](#users-and-stakeholders)
+* [Solution Overview](#solution-overview)
+* [Inputs](#inputs)
+* [Processing](#processing)
+* [Outputs](#outputs)
+* [Major Workflow](#major-workflow)
+* [Assumptions and Constraints](#assumptions-and-constraints)
+* [Success Criteria](#success-criteria)
+* [Related Documents](#related-documents)
+* [References](#references)
 
 ## Problem or Need
 
-<!--
-TODO: Describe the problem, need, or opportunity the software addresses.
+GC-STEM needs to identify courses and pages that contain particular text or embedded URLs. The target may appear in a page's visible wording, in a hyperlink, or elsewhere in its HTML. Opening course shells and checking each location manually is slow and makes omissions difficult to detect.
 
-Explain:
-* What problem exists?
-* Who experiences the problem?
-* Why is solving the problem useful or important?
+Course material also lives outside Brightspace's Content tool. Assignment instructions, discussion prompts, announcements, and quiz questions can contain the same target. A search that only follows Content links can miss these locations.
 
-Describe the problem without assuming a particular technical solution.
--->
+Earlier browser experiments demonstrated useful automation at another institution, but their login assumptions and task logic are not a reusable foundation for SNHU. The project needs a clearer separation of responsibilities and configuration that can change without editing the program.
 
 ## Solution Purpose
 
-<!--
-TODO: Explain the purpose of the proposed software solution.
+Provide a reusable set of D2L Brightspace tools, starting with a read-only course-content search. An authorized operator supplies a course inventory, target strings, selected tool areas, and output location. The tool searches the supported course-authored material and reports where each target appears.
 
-In one or two short paragraphs, summarize:
-* What the software is intended to accomplish.
-* How it addresses the problem or need described above.
-* What value the completed solution provides.
--->
+The result should help maintainers find and review affected material. It must also explain what was searched and what could not be searched, so missing access or failed retrievals do not look like successful searches with no matches.
 
 ## Users and Stakeholders
 
-<!--
-TODO: Identify the people, groups, organizations, or systems that use, depend on,
-support, or are otherwise affected by the software.
-
-For a simple project, a short bulleted list may be sufficient.
--->
-
 | User or Stakeholder | Role or Need |
 | --- | --- |
-| `<user or stakeholder>` | `<how they use or are affected by the software>` |
+| GC-STEM administrators and course maintainers | Search authorized course shells and use results to plan follow-up work. |
+| Course subject matter experts and developers | Locate affected instructions, resources, and assessment material. |
+| Automation developers and maintainers | Reuse authentication, course access, content extraction, and reporting across future tools. |
+| Brightspace administrators and institutional support | Clarify permissions, available integrations, and acceptable operational load. |
+| Instructors and students | Benefit from corrected course material; they are not direct users of this administrative tool. |
 
 ## Solution Overview
 
-<!--
-TODO: Describe what the software does from the user's or stakeholder's perspective.
+The first release uses a browser that the operator signs into through the institution's normal login process. The operator completes SSO and MFA directly. The program does not ask for passwords or verification codes.
 
-Focus on the major capabilities of the solution rather than individual functions,
-classes, algorithms, or implementation details.
-
-A reader should be able to understand the overall solution after reading this section.
--->
+Separate adapters read each supported Brightspace tool. They return course-authored material in a common format. A shared search component finds the target strings, and a reporting component records matches and search coverage. A later API provider can implement the same contract if API access becomes available.
 
 ### Major Capabilities
 
-<!--
-TODO: List the major things the software allows a user or another system to do.
-
-Keep these statements at a high level. More detailed requirements belong in
-10_requirements.md when that document is used.
--->
-
-* `<Major capability>`
-* `<Major capability>`
-* `<Major capability>`
+* Prepare the existing Excel course inventory by extracting `CourseName` hyperlinks into `CourseURL`.
+* Search a validated, explicit course list without discovering unrelated courses.
+* Search supported authored material across multiple Brightspace tools.
+* Find visible text and strings in HTML or URL attributes.
+* Return course identity, tool area, object location, page URL, target, and bounded match context.
+* Report incomplete searches and preserve useful results when one area fails.
 
 ## Inputs
 
-<!--
-TODO: Identify the important information or other inputs the software receives.
-
-Inputs may come from:
-* Users
-* Files
-* Databases
-* Devices or sensors
-* APIs or other software
-* The operating system or environment
-
-Describe the information, not the programming-language variable used to store it.
--->
-
 | Input | Source | Purpose |
 | --- | --- | --- |
-| `<input>` | `<where it comes from>` | `<why the software needs it>` |
+| Course inventory | Existing Excel workflow; proposed normalized CSV alternative | Identify the courses to inspect. |
+| Search targets | Operator configuration or explicit command options | Define the strings to locate. |
+| Instance and crawl settings | TOML file, supported environment variables, command options | Set tenant, tool scope, matching mode, pacing, limits, and destinations. |
+| Authenticated session | Operator's interactive browser login | Provide access under the operator's existing permissions. |
+| Course-authored HTML and text | Supported Brightspace tool views | Supply searchable material. |
 
 ## Processing
 
-<!--
-TODO: Explain, in plain language, the major work the software performs.
-
-Describe the important steps, decisions, calculations, transformations, or
-interactions without reproducing detailed pseudocode or source code.
-
-For a simple program, this may be a short numbered list.
--->
-
-1. `<Major processing step>`
-2. `<Major processing step>`
-3. `<Major processing step>`
+1. Validate configuration, course identifiers, URLs, targets, and output access.
+2. Open a browser and let the operator complete normal institutional login.
+3. Visit only the selected courses and discover each selected tool independently.
+4. Read authorized authored fields, following tool pagination and nested structures.
+5. Search the requested representations and record match locations.
+6. Assess coverage independently of matches, then save reports and close the session.
 
 ## Outputs
 
-<!--
-TODO: Identify the important information, actions, or other outputs produced by
-the software.
-
-Outputs may include:
-* Information displayed to a user
-* Reports
-* Files
-* Database changes
-* Messages sent to another system
-* Actions performed by a device
--->
-
 | Output | Destination | Purpose |
 | --- | --- | --- |
-| `<output>` | `<where it goes>` | `<why it is produced>` |
+| Processed workbook with `CourseURL` | Specified local workbook destination | Make embedded course links available for reuse. |
+| `matches.csv` | Unique local run directory | Review and filter individual match locations. |
+| `coverage.csv` | Same run directory | Review each course/tool's completeness, counts, exclusions, and failures. |
+| `summary.json` | Same run directory | Preserve run settings, scope, version information, counts, statuses, and diagnostics. |
+| Progress and exit status | Terminal | Show progress and whether the declared scan completed. |
+
+No course changes, messages, student work, or grades are produced or modified.
 
 ## Major Workflow
 
-<!--
-TODO: Summarize how a typical user, request, transaction, or item of data moves
-through the solution from beginning to end.
+1. A maintainer prepares the course list and search configuration.
+2. The tool validates inputs before opening Brightspace.
+3. The maintainer signs in through the displayed browser.
+4. The tool searches the selected course/tool areas and records any gaps.
+5. The maintainer reviews matches and coverage, then decides what course maintenance is needed.
 
-Use a short numbered list or a simple diagram. Focus on the main path rather than
-every possible exception or implementation detail.
-
-If a separate diagram is provided, link to it here.
--->
-
-1. `<Starting event or action>`
-2. `<What happens next>`
-3. `<Important decision or processing step>`
-4. `<Result or completion>`
-
-<!-- Example link when applicable:
-See [23_diagram.drawio](./23_diagram.drawio) for a visual representation of the workflow.
--->
+See [23_diagram.drawio](./23_diagram.drawio), page **Search workflow**, for the proposed process.
 
 ## Assumptions and Constraints
 
-<!--
-TODO: Identify important assumptions or limitations a reader should understand.
-
-Examples include:
-* Required operating environment
-* Required data or external services
-* Supported users or devices
-* Technology required by the assignment or organization
-* Activities intentionally outside the solution's scope
-
-Include only assumptions and constraints important to understanding the solution.
--->
-
 ### Assumptions
 
-* `<Assumption>`
+* The operator has appropriate access to the supplied courses.
+* API availability is unknown; the first implementation must work through the browser.
+* SNHU's content experience and tool views can be inspected in a suitable pilot shell.
+* The proposed broader scope means course-authored material, not learner activity.
 
 ### Constraints
 
-* `<Constraint>`
+* The first search release is read-only: it must not edit content, publish items, start quiz attempts, submit work, or change grades or settings. Normal view/audit logging may still occur.
+* Credentials, cookies, and tokens must not be committed or included in reports.
+* Search scope and tenant data must be configurable rather than embedded in source.
+* The proposed baseline includes Content, Manage Files HTML, Announcements, Assignments, Discussions, Quizzes, and Question Library. Additional tools need separate adapters and tests.
+* External links can be inspected as strings, but external websites are not crawled.
+* Binary document contents, media, LTI/SCORM execution, student work, and personal communications are excluded.
+* Complete coverage is bounded by the declared tool set, visibility, representations, permissions, and scan period.
 
 ## Success Criteria
 
-<!--
-TODO: Explain, in observable terms, what must be true for the solution to be
-considered successful.
-
-Keep these criteria understandable to a nontechnical reader.
-
-More detailed and testable requirements belong in 10_requirements.md when that
-document is used.
--->
-
-* `<The solution successfully ...>`
-* `<The solution correctly ...>`
-* `<The user can ...>`
+* A seeded target is found in each required tool area, including a target present only in an embedded URL.
+* Reports identify an accessible review location or a clearly labeled containing page and object path.
+* A page failure, denied area, unsupported field, or enforced limit appears as incomplete coverage.
+* Unaffected content, quiz attempts, submissions, and grades remain unchanged.
+* A future D2L tool can reuse the session and course-access components without copying login code.
+* The existing Excel preparation workflow remains available after package migration.
 
 ## Related Documents
 
-<!--
-TODO: Link to additional lifecycle documents used by this assignment.
-
-Delete entries that are not used. Add other relevant project documents as needed.
--->
-
 * [Requirements](./10_requirements.md)
+* [Architecture](./19_architecture.md)
 * [Design](./20_design.md)
-* [Architecture](./21_architecture.md)
 * [Diagram](./23_diagram.drawio)
 * [Pseudocode](./26_pseudocode.txt)
 * [Program Design Language](./29_pdl.md)
 * [Construction](./30_construction.md)
 * [Testing](./40_testing.md)
+* [Maintainer worksheet](./worksheet.md)
 
 ## References
 
-<!--
-TODO: List sources used to understand the problem domain or develop this overview,
-if required by the assignment.
-
-Use the citation style required by the course. Delete this section if references
-are not required.
--->
+* Project discussions on October 16, 2026: Brightspace Crawler Architecture; Brightspace Content Search; Extract Course URLs with Python; Normalize EOL Settings; Configure VS Code Venv.
+* Project-owner clarifications on October 16, 2026: broaden search beyond Content; use browser access first while API availability is unknown; deliver downloadable drafts.
+* [Repository baseline, commit 196cda4](https://github.com/GC-STEM/automation/tree/196cda43adf48a8b3b74b3ea03101763bcb0f67f).
+* D2L, [Mapping Brightspace Functionality (Higher Education)](https://community.d2l.com/brightspace/kb/articles/6085-mapping-brightspace-functionality-higher-education), consulted October 16, 2026. The selected search scope is a project proposal, not a statement that every tenant exposes every field.
 
 <!--
-title: "GC-STEM D2L Automation | {{Task Title}}"
-description: "A concise, nontechnical overview of the software problem, proposed solution, users, inputs, processing, outputs, workflow, constraints, and success criteria."
+title: "GC-STEM D2L Automation | Software Solution Overview"
 document_type: "Software Solution Overview"
-owner: "GC-STEM, Computer Science"
-scope: "CS000.{{TaskCode}}"
-version: "<0.0.0>"
-updated: "<YYYY-MM-DDTHH:MM:SS±HH:MM>"
+description: "Draft requirements and implementation guidance for reusable GC-STEM D2L tools."
+owner: "GC-STEM Automation maintainers"
+scope: "GC-STEM Automation / D2L"
+status: "draft for review"
+version: "0.1.0-draft.1"
+updated: "2026-10-16T19:46:29-04:00"
+source_commit: "196cda43adf48a8b3b74b3ea03101763bcb0f67f"
 toc: true
-tags: ["overview", "software-development", "software-engineering"]
+tags: ["d2l", "brightspace", "automation", "draft"]
 -->
-
-<!-- To see this file in a clean, formatted view, select ▼ in the upper-right corner of the editor pane, then select "Markdown Preview". -->
-
-<!-- TODO: Before submitting, replace all placeholders, resolve all TODO prompts, and delete sections that the assignment explicitly identifies as not applicable. -->
