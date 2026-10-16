@@ -1,4 +1,4 @@
-# {{CS-000}} {{Task Code}} | Software Requirements Specification
+# GC-STEM D2L Automation | Software Requirements Specification
 
 <!-- TODO: Replace the title placeholders with the course code, task code, and task title. -->
 
@@ -190,7 +190,7 @@ This **Software Requirements Specification (SRS)** defines what the software mus
 <!-- TODO: List external sources, standards, frameworks, libraries, documentation, or other references used to develop this document. Use the citation style required by the course. Delete this section if references are not required. -->
 
 <!--
-title: "{{CS-000}} {{Task Code}} | {{Task Title}}"
+title: "GC-STEM D2L Automation | {{Task Title}}"
 description: "<Brief summary of this document's purpose and scope.>"
 document_type: "Software Requirements Specification (SRS)"
 owner: "GC-STEM, Computer Science"

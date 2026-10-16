@@ -1,4 +1,4 @@
-# {{CS-000}} {{Task Code}} | Software Solution Overview
+# GC-STEM D2L Automation | Software Solution Overview
 
 <!--
 This document provides a concise, nontechnical overview of the software solution.
@@ -218,7 +218,7 @@ are not required.
 -->
 
 <!--
-title: "{{CS-000}} {{Task Code}} | {{Task Title}}"
+title: "GC-STEM D2L Automation | {{Task Title}}"
 description: "A concise, nontechnical overview of the software problem, proposed solution, users, inputs, processing, outputs, workflow, constraints, and success criteria."
 document_type: "Software Solution Overview"
 owner: "GC-STEM, Computer Science"

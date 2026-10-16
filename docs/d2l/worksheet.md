@@ -1,4 +1,4 @@
-# {{CS-000}} {{Task Code}} | {{Task Title}}
+# GC-STEM D2L Automation | {{Task Title}}
 
 ---
 > [!IMPORTANT]
@@ -67,7 +67,7 @@ cd "$HOME/Repos/{{cs000}}"
 ## Getting Help
 
 <!--
-title: "{{CS-000}} {{Task Code}} | {{Task Title}}"
+title: "GC-STEM D2L Automation | {{Task Title}}"
 description: "<Brief summary of what this task asks students to do and why>. This task is <Required | Optional>, <graded | ungraded>; <no submission required | one submission required>."
 document_type: "<Document Type>"
 owner: "GC-STEM, Computer Science"

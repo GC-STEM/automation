@@ -1,4 +1,4 @@
-# {{CS-000}} {{Task Code}} | Software Design Description
+# GC-STEM D2L Automation | Software Design Description
 
 <!-- TODO: Replace the title placeholders with the course code, task code, and task title. -->
 
@@ -176,7 +176,7 @@ This **Software Design Description (SDD)** transforms the approved requirements 
 <!-- TODO: List external sources, standards, frameworks, libraries, documentation, or other references used to develop this document. Use the citation style required by the course. Delete this section if references are not required. -->
 
 <!--
-title: "{{CS-000}} {{Task Code}} | {{Task Title}}"
+title: "GC-STEM D2L Automation | {{Task Title}}"
 description: "<Brief summary of this document's purpose and scope.>"
 document_type: "Software Design Description (SDD)"
 owner: "GC-STEM, Computer Science"
