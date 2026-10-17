@@ -1,0 +1,53 @@
+name: D2L local checks
+
+on:
+  push:
+    paths:
+      - 'src/gc_stem/**'
+      - 'tests/d2l/**'
+      - 'config/d2l.toml'
+      - 'pyproject.toml'
+      - '.github/workflows/d2l.yml'
+  pull_request:
+    paths:
+      - 'src/gc_stem/**'
+      - 'tests/d2l/**'
+      - 'config/d2l.toml'
+      - 'pyproject.toml'
+      - '.github/workflows/d2l.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: d2l-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  local-checks:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.12', '3.14']
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install development dependencies
+        run: python -m pip install -e ".[dev]"
+      - name: Lint package and D2L tests
+        run: python -m ruff check src/gc_stem tests/d2l
+      - name: Test local pipeline without Brightspace access
+        run: python -m pytest tests/d2l -q
+      - name: Build distribution
+        run: python -m build
+      - name: Check command entry points
+        run: gc-stem --help

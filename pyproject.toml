@@ -43,9 +43,8 @@ Repository = "https://github.com/GC-STEM/automation"
 # Command-Line Entry Point
 # =============================================================================
 
-# Enable after src/gc_stem/cli.py defines main().
-# [project.scripts]
-# gc-stem = "gc_stem.cli:main"
+[project.scripts]
+gc-stem = "gc_stem.cli:main"
 
 
 # =============================================================================

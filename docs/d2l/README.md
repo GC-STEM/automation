@@ -1,5 +1,7 @@
 # GC-STEM D2L Automation | Documentation
 
+Current code availability, commands, verification, and remaining live-provider work are tracked in [Implementation Status](./50_implementation_status.md).
+
 > **Draft for review — October 16, 2026.** These documents describe the proposed D2L tools and their construction. They do not certify that the crawler is implemented or tested.
 
 ## Table of Contents <!-- omit from toc -->
