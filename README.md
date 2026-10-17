@@ -1,92 +1,173 @@
-[text](tool_name)# CS-000 Code Repository
+# GC-STEM Automation
 
-> [!IMPORTANT]
-> 🚨 Do **NOT** fork or clone this repository yet! Follow the [**Setup Tasks**](#1-1-setup-tasks) instead.
+Reusable Python tools, scripts, and workflows for GC-STEM course
+administration, repository management, and maintenance.
 
-Welcome to the **CS-000 Code Repository**! To get started:
+This project is intended for administrators, maintainers, and course
+developers. It provides a shared Python library and the `gc-stem`
+command-line interface. D2L Brightspace is the first toolset; additional
+capabilities will be added as requirements are defined.
 
-* Complete the [**setup tasks**](./1-1_Setup_Tasks/README.md) before the end of Week 1.
-* If you run into problems, [**get help**](#help-and-support) early and often.
-* Open the repo in your course IDE when Brightspace directs you to a [**code repository**](#repository-activities).
-* [**Learn more**](#learn-more) about what you are doing and why, if you are curious.
+## Contents
 
-## 1-1 Setup Tasks
+1. [Contents](#contents)
+2. [Project status](#project-status)
+3. [Get started](#get-started)
+4. [D2L tools](#d2l-tools)
+5. [Repository structure](#repository-structure)
+6. [Development and checks](#development-and-checks)
+7. [Configuration and data](#configuration-and-data)
+8. [Contributing and support](#contributing-and-support)
 
-Complete these one-time setup tasks **before the end of Week 1** or before starting **Repository Activities**.
+## Project status
 
-1. [**Set up your GitHub account**](./1-1_Setup_Tasks/README.md).
+**Active development.** Availability varies by toolset.
 
-2. [**Set up your course development environment**](https://github.com/GC-STEM/cs000/wiki/Setup-CDE).
+| Capability | Current status |
+| --- | --- |
+| D2L workbook preparation | Available: extract course hyperlinks into a `CourseURL` column. |
+| D2L configuration and course inventory validation | Available for supported Excel and CSV inputs. |
+| D2L search, coverage, and reporting components | Implemented and tested with synthetic clients. |
+| Live Brightspace search | Pending browser authentication and tenant-specific tool adapters. |
 
-3. [**Set up your course repository**](https://github.com/GC-STEM/cs000/wiki/Setup-Repo).
+See the [D2L documentation](docs/d2l/README.md) for requirements and design.
+The [implementation status](docs/d2l/50_implementation_status.md) identifies
+available commands and remaining work.
 
-If a setup task does not work as expected, [**get help**](#help-and-support) before continuing.
+## Get started
 
-> [!IMPORTANT]
-> Now that you have completed the setup tasks, perform all remaining activities in your course development environment (CDE), not on GitHub.
+You need Git and Python 3.12 or later.
 
-## Repository Activities
+Run these commands in a terminal. Examples use `python` for the required
+Python version; use `python3` before activating the virtual environment if
+that is your system's Python command.
 
-If Brightspace sent you to GitHub, switch to your local copy of the repository in your course IDE. If you are using the recommended course IDE, open a terminal, type the following command, and press **Enter**.
+Clone the repository and create a virtual environment:
 
 ```bash
-code "$HOME/Repos/cs000"
+git clone https://github.com/GC-STEM/automation.git
+cd automation
+python -m venv .venv
 ```
 
-Find the matching **Guidelines & Rubric** below. Open the corresponding **Repository Activity** and follow the instructions. They will guide you through the listed templates and deliverables. If the instructions are unclear or something does not work as expected, [**get help**](#help-and-support) early and often.
+Activate the environment using the command for your shell:
 
-**Table 0.1** - *Code Repository Activities*
+| Platform and shell | Command |
+| --- | --- |
+| Linux or macOS, Bash | `source .venv/bin/activate` |
+| Windows, Git Bash | `source .venv/Scripts/activate` |
+| Windows, PowerShell | `.\.venv\Scripts\Activate.ps1` |
 
-| **Week** | **Guidelines & Rubric** | **Repository Activity** | **Templates → Deliverables** |
-| :------: | ----------------------- | ----------------------- | --------------------------- |
-| **1** | Not Applicable (N/A) | [1-1_Setup_Tasks](./1-1_Setup_Tasks/README.md) | None. |
-| **2** | Module Two Assignment | [2-0_Activity](./2-0_Activity_Title/README.md) | `<filename2-0>.<ext>` |
-| **3** | Module Three Assignment | [3-0_Activity](./3-0_Activity_Title/README.md) | `<filename3-0>.<ext>` |
-| **4** | Module Four Assignment | [4-0_Activity](./4-0_Activity_Title/README.md) | `<filename4-0>.<ext>` |
-| **5** | Project One | [5-0_Activity](./5-0_Activity_Title/README.md) | `<filename5-0>.<ext>` |
-| **6** | Module Six Milestone | [6-0_Activity](./6-0_Activity_Title/README.md) | `<filename6-0>.<ext>` |
-| **7** | Project Two | [7-0_Activity](./7-0_Activity_Title/README.md) | `<filename7-0>.<ext>` |
-| **8** | Not Applicable (N/A) | [8-9_Next_Steps](./8-9_Next_Steps/README.md) | None. |
+Install the package and development tools, then check the command interface:
 
-> [!NOTE]
-> *Guidelines & Rubric* are in your [**Brightspace**](https://learn.snhu.edu/d2l/home) course under **Learning Modules** > **Assignment Information**.
+```bash
+python -m pip install -e ".[dev]"
+gc-stem --help
+```
 
-## Learn More
+Editable installation makes changes under `src/` available in the active
+environment. Reinstall after changing dependencies or package entry points.
 
-Want to understand more about what you are doing in this repository, how it works, or why it matters?
+You can also run the CLI as `python -m gc_stem`.
 
-* Visit the repo [**Wiki**](https://github.com/GC-STEM/cs000/wiki) for explanations, standards, best practices, and technical guidance.
+## D2L tools
 
-* Ask a question in [**GitHub Discussions**](https://github.com/GC-STEM/cs000/discussions) if something in the repository is unclear or you want to learn more.
+Run the following commands from the repository root.
 
-## Help and Support
+View workbook preparation options:
 
-You are not in this alone. If you have questions or run into problems, return to your [**Brightspace**](https://learn.snhu.edu/d2l/home) course and select a support option from the main menu.
+```bash
+gc-stem d2l courses extract-urls --help
+```
 
-* [**Academic Support**](https://myapps.microsoft.com/signin/00b02d3d-d1f9-40dc-b7e0-a4c4f512c5b4?tenantId=2baef15b-b8de-423f-9d8a-46f3686d8848) for questions about course concepts and activities.
+Review [config/d2l.toml](config/d2l.toml), including the course inventory path,
+worksheet, column names, and example search terms. Paths inside this TOML
+file are relative to the configuration file's directory.
 
-* [**IT Service Desk**](https://snhu.service-now.com/sp) for technical support with course technologies.
+Validate the local configuration and course inventory:
 
-* [**More ▼ Online Student Services**](https://learn.snhu.edu/d2l/home) on your course navigation bar for additional support options.
+```bash
+gc-stem d2l search --config config/d2l.toml --validate-only
+```
 
----
+Validation checks local inputs and output access. It does not connect to
+Brightspace or establish search coverage.
 
-## Ideation Section - Dev Only
+For workbook extraction commands, supported overrides, and search behavior,
+see [D2L implementation status](docs/d2l/50_implementation_status.md).
+Live Brightspace search will become available after the browser provider and
+tool adapters are implemented and verified.
 
-* [ ] Script or manual procedure to change all `/GC-STEM/cs000` to student's GitHub `/username/cs000` after cloning.
+## Repository structure
 
-* [ ] Add virtual infrastructure badges
+| Location | Purpose |
+| --- | --- |
+| [src/gc_stem/](src/gc_stem/) | Importable Python package and shared CLI. |
+| [src/gc_stem/d2l/](src/gc_stem/d2l/) | D2L Brightspace toolset. |
+| [scripts/](scripts/) | Standalone scripts and operational entry points. |
+| [config/](config/) | Nonsecret configuration and examples. |
+| [data/](data/) | Source inputs, intermediate files, and processed outputs. |
+| [docs/](docs/) | Requirements, design, usage, and implementation documentation. |
+| [tests/](tests/) | Automated tests organized by toolset. |
+| [.github/](.github/) | Repository workflows, CI checks, and maintainer configuration. |
+| [pyproject.toml](pyproject.toml) | Package metadata, dependencies, and development settings. |
 
-<!-- url-owner: repository-owner; scope: next-link -->
-[![Open in VS Code for the Web](./.github/assets/open-in-vscode-web.svg)](https://github.dev/GC-STEM/cs000)
+## Development and checks
 
-<!-- url-owner: repository-owner; scope: next-link -->
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/GC-STEM/cs000?quickstart=1)
+With the development environment active, run:
 
-<!-- Repository Metadata
----
-version: "{0.0.0}"
-updated: "{YYYY-MM-DDTHH:MM:SS±HH:MM}"
-tags: ["{Tag1}", "{Tag2}"]
----
--->
+```bash
+python -m ruff check src/gc_stem tests
+python -m pytest tests -q
+python -m build
+```
+
+The build command creates a wheel and source distribution in `dist/`.
+
+GitHub Actions provides these checks and packaging workflows:
+
+| Workflow | Purpose |
+| --- | --- |
+| [Core Validation](.github/workflows/ci.yml) | Validate repository configuration, CI safeguards, and workflow syntax. |
+| [D2L local checks](.github/workflows/d2l.yml) | Lint, test, build, and check CLI entry points on Windows and Linux. |
+| [Documentation Command Syntax](.github/workflows/readme-commands.yml) | Check documented Bash command syntax. |
+| [Internal Links](.github/workflows/internal-links.yml) | Check local documentation links and supported heading anchors. |
+| [External Links](.github/workflows/external-links.yml) | Check external documentation links. |
+| [Release preparation](.github/workflows/release.yml) | Manually build, verify installation, and upload downloadable distributions. |
+
+Review results on the project's
+[Actions page](https://github.com/GC-STEM/automation/actions).
+Release preparation produces artifacts for review; publication is a separate
+step.
+
+## Configuration and data
+
+Keep service addresses, input paths, search terms, and other operational
+settings outside source code. Store only nonsecret settings in committed
+configuration files.
+
+Keep credentials, session cookies, browser profiles, and restricted inputs or
+reports out of version control. Review `.gitignore` and staged changes before
+committing local data. A file's location under `data/` does not automatically
+exclude it from Git.
+
+Run service automation with authorized access. Review generated reports
+before sharing them.
+
+## Contributing and support
+
+Use [GitHub Issues](https://github.com/GC-STEM/automation/issues) to report
+bugs, request features, or discuss proposed changes. Include the relevant
+tool, Python version, command, and redacted error output.
+
+When adding a toolset:
+
+- Organize reusable code under `src/gc_stem/<toolset>/`.
+- Add matching tests, configuration examples, and documentation.
+- Extend the CLI and CI checks as needed.
+- Follow PEP 8 and PEP 257 for Python code and docstrings.
+- Update this README and the toolset's implementation status when
+  availability changes.
+
+Keep service access, configuration, processing, and reporting separate so
+future tools can reuse shared components.
