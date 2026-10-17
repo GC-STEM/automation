@@ -5,7 +5,7 @@
     ".github/ci/README.md", ".github/ci/requirements.txt",
     ".github/ci/check_repository.py", ".github/ci/check_readme_commands.py",
     ".github/ci/check_links.py", ".github/ci/lychee.toml",
-    ".github/ci/test_ci.py", ".github/workflows/tests.yml",
+    ".github/ci/test_ci.py", ".github/workflows/ci.yml",
     ".github/workflows/readme-commands.yml",
     ".github/workflows/internal-links.yml",
     ".github/workflows/external-links.yml"

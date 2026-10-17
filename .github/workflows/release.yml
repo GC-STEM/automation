@@ -1,0 +1,96 @@
+name: Release preparation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Test and package Python distributions
+    if: github.repository_owner == 'GC-STEM'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Install development dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -e ".[dev]"
+
+      - name: Lint package and D2L tests
+        run: python -m ruff check src/gc_stem tests/d2l
+
+      - name: Test local pipeline without Brightspace access
+        run: python -m pytest tests/d2l -q
+
+      - name: Build wheel and source distribution
+        run: python -m build
+
+      - name: Verify installation from each distribution
+        run: |
+          dist_dir="$GITHUB_WORKSPACE/dist"
+          for archive in "$dist_dir"/*.whl "$dist_dir"/*.tar.gz; do
+            smoke_dir="$(mktemp -d "$RUNNER_TEMP/package-smoke.XXXXXX")"
+            python -m venv "$smoke_dir/venv"
+            smoke_python="$smoke_dir/venv/bin/python"
+            "$smoke_python" -m pip install \
+              --disable-pip-version-check "$archive"
+            (
+              cd "$smoke_dir"
+              "$smoke_python" -I -c "import gc_stem; import gc_stem.d2l"
+              "$smoke_python" -I -m gc_stem --help
+              "$smoke_dir/venv/bin/gc-stem" --help
+            )
+          done
+
+      - name: Record artifact checksums and source commit
+        run: |
+          (
+            cd dist
+            sha256sum -- *.whl *.tar.gz > SHA256SUMS.txt
+          )
+          git rev-parse HEAD > dist/SOURCE_COMMIT.txt
+
+      - name: Upload verified distributions
+        id: artifacts
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: gc-stem-automation-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/SHA256SUMS.txt
+            dist/SOURCE_COMMIT.txt
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+
+      - name: Write preparation summary
+        env:
+          ARTIFACT_URL: ${{ steps.artifacts.outputs.artifact-url }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          {
+            printf '## Release preparation\n\n'
+            printf 'Source commit: `%s`\n\n' "$SOURCE_SHA"
+            printf '[Download verified distributions](%s)\n\n' \
+              "$ARTIFACT_URL"
+            printf 'Prepared for review; publication is a separate step.\n'
+          } >> "$GITHUB_STEP_SUMMARY"
