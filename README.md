@@ -1,6 +1,6 @@
 # GC-STEM Automation
 
-Reusable Python tools, scripts, and workflows for GC-STEM course
+Reusable tools, scripts, and workflows for GC-STEM course
 administration, repository management, and maintenance.
 
 This project is intended for administrators, maintainers, and course
@@ -8,16 +8,15 @@ developers. It provides a shared Python library and the `gc-stem`
 command-line interface. D2L Brightspace is the first toolset; additional
 capabilities will be added as requirements are defined.
 
-## Contents
+## Table of Contents <!-- omit from toc -->
 
-1. [Contents](#contents)
-2. [Project status](#project-status)
-3. [Get started](#get-started)
-4. [D2L tools](#d2l-tools)
-5. [Repository structure](#repository-structure)
-6. [Development and checks](#development-and-checks)
-7. [Configuration and data](#configuration-and-data)
-8. [Contributing and support](#contributing-and-support)
+1. [Project status](#project-status)
+2. [Get started](#get-started)
+3. [D2L tools](#d2l-tools)
+4. [Repository structure](#repository-structure)
+5. [Development and checks](#development-and-checks)
+6. [Configuration and data](#configuration-and-data)
+7. [Contributing and support](#contributing-and-support)
 
 ## Project status
 
