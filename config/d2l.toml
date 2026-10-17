@@ -1,23 +1,53 @@
+# Nonsecret settings for the D2L tools.
+# Paths are relative to this file, not the terminal's working directory.
+# Replace the search terms before an operational search.
+schema_version = 1
+
 [instance]
 base_url = "https://learn.snhu.edu/d2l/"
 provider = "browser"
 auth = "interactive"
 
 [courses]
-file = "data/courses.csv"
+file = "../data/processed/gc-stem_d2l_courses.xlsx"
+format = "xlsx"
+sheet = "D2L"
+name_column = "CourseName"
+url_column = "CourseURL"
 
 [search]
 terms = ["target one", "target two"]
-mode = "dom"
+mode = "all"
 ignore_case = true
 regex = false
 
 [crawl]
-include_hidden = false
+tools = [
+    "content",
+    "files",
+    "announcements",
+    "assignments",
+    "discussions",
+    "quizzes",
+    "question_library",
+]
+include_hidden = true
 follow_external_links = false
 delay_seconds = 1.0
+read_timeout_seconds = 30
+auth_timeout_seconds = 300
+max_retries = 2
+max_reauthentications = 1
+max_retry_wait_seconds = 60
 max_pages_per_course = 300
+max_objects_per_tool = 1000
+max_field_characters = 2000000
+concurrency = 1
+
+[browser]
+headless = false
+trusted_asset_hosts = []
 
 [output]
-directory = "output"
+directory = "../data/processed/d2l-search"
 formats = ["csv", "json"]
