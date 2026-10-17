@@ -1,0 +1,309 @@
+{
+  "schema_version": 1,
+  "catalog_type": "brightspace_course_routes",
+  "source": {
+    "repository": "GC-STEM/automation",
+    "path": "docs/d2l/d2l_replace_strings.md",
+    "commit": "50393d3269571e7d87aa41aff1be47c2f2d2cebe",
+    "git_blob_sha": "f810bfdd1f0df7b4b9c51a7f9ccfa07a7b53afe2",
+    "url": "https://github.com/GC-STEM/automation/blob/50393d3269571e7d87aa41aff1be47c2f2d2cebe/docs/d2l/d2l_replace_strings.md",
+    "section": "Course URLs"
+  },
+  "observed_origin": "https://learn.snhu.edu",
+  "usage": "reference_only",
+  "verification": {
+    "live_routes_verified": false,
+    "student_access_flags_verified": false
+  },
+  "url_construction": {
+    "origin_source": "settings.instance.tenant_origin",
+    "placeholder": "{OrgUnitId}",
+    "org_unit_id_format": "positive_decimal_string",
+    "html_entities": "decoded_once",
+    "preserve_path_case": true,
+    "preserve_query_order": true,
+    "preserve_fragments": true
+  },
+  "routes": [
+    {
+      "id": "availability_date_defaults",
+      "label": "Availability Date Defaults",
+      "path_template": "/d2l/le/availabilitydatedefaults/{OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 9
+    },
+    {
+      "id": "course_offering_information",
+      "label": "Course Offering Information",
+      "path_template": "/d2l/lp/manageCourses/course_offering_info_viewedit.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 10
+    },
+    {
+      "id": "homepages",
+      "label": "Homepages",
+      "path_template": "/d2l/lp/homepages/{OrgUnitId}/list?fromCMC=1",
+      "student_accessible_reported": false,
+      "source_line": 11
+    },
+    {
+      "id": "navigation_and_themes",
+      "label": "Navigation & Themes",
+      "path_template": "/d2l/lp/navbars/{OrgUnitId}/list",
+      "student_accessible_reported": false,
+      "source_line": 12
+    },
+    {
+      "id": "navbar_create_customize",
+      "label": "Navbar Create/Customize",
+      "path_template": "/d2l/lp/navbars/{OrgUnitId}/navbar/Create",
+      "student_accessible_reported": false,
+      "source_line": 13
+    },
+    {
+      "id": "navbar_custom_links",
+      "label": "Navbar Custom Links",
+      "path_template": "/d2l/lp/navbars/{OrgUnitId}/customlink/list",
+      "student_accessible_reported": false,
+      "source_line": 14
+    },
+    {
+      "id": "widgets",
+      "label": "Widgets",
+      "path_template": "/d2l/lp/homepage/admin/widget/widget_manage.d2l?ou={OrgUnitId}&tu=hp&fromCMC=1",
+      "student_accessible_reported": false,
+      "source_line": 15
+    },
+    {
+      "id": "calendar",
+      "label": "Calendar",
+      "path_template": "/d2l/le/calendar/{OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 16
+    },
+    {
+      "id": "content",
+      "label": "Content",
+      "path_template": "/d2l/le/content/{OrgUnitId}/Home",
+      "student_accessible_reported": true,
+      "source_line": 17
+    },
+    {
+      "id": "frequently_asked_questions",
+      "label": "Frequently Asked Questions",
+      "path_template": "/d2l/lms/faq/manage_faq.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 18
+    },
+    {
+      "id": "glossary",
+      "label": "Glossary",
+      "path_template": "/d2l/lms/glossary/glossary.d2l?ou={OrgUnitId}&nb=1",
+      "student_accessible_reported": true,
+      "source_line": 19
+    },
+    {
+      "id": "links",
+      "label": "Links",
+      "path_template": "/d2l/lms/links/manage_links.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 20
+    },
+    {
+      "id": "attendance",
+      "label": "Attendance",
+      "path_template": "/d2l/lms/attendance/registers/registers_list.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 21
+    },
+    {
+      "id": "class_progress",
+      "label": "Class Progress",
+      "path_template": "/d2l/le/userprogress/{OrgUnitId}/classprogress/List",
+      "student_accessible_reported": false,
+      "source_line": 22
+    },
+    {
+      "id": "classlist",
+      "label": "Classlist",
+      "path_template": "/d2l/lms/classlist/classlist.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 23
+    },
+    {
+      "id": "groups",
+      "label": "Groups",
+      "path_template": "/d2l/lms/group/user_group_list.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 24
+    },
+    {
+      "id": "locations",
+      "label": "Locations",
+      "path_template": "/d2l/le/locations/{OrgUnitId}/Home",
+      "student_accessible_reported": true,
+      "source_line": 25
+    },
+    {
+      "id": "seating_chart",
+      "label": "Seating Chart",
+      "path_template": "/d2l/le/seatingcharts/{OrgUnitId}/Home",
+      "student_accessible_reported": true,
+      "source_line": 26
+    },
+    {
+      "id": "sections",
+      "label": "Sections",
+      "path_template": "/d2l/lms/group/section_list.d2l?ou={OrgUnitId}&dst=1",
+      "student_accessible_reported": true,
+      "source_line": 27
+    },
+    {
+      "id": "assignments_view",
+      "label": "Assignments - View",
+      "path_template": "/d2l/lms/dropbox/dropbox.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 28
+    },
+    {
+      "id": "assignments_manage",
+      "label": "Assignments - Manage",
+      "path_template": "/d2l/lms/dropbox/admin/folders_manage.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 29
+    },
+    {
+      "id": "awards_view",
+      "label": "Awards - View",
+      "path_template": "/d2l/awards/{OrgUnitId}/#",
+      "student_accessible_reported": true,
+      "source_line": 30
+    },
+    {
+      "id": "awards_manage",
+      "label": "Awards - Manage",
+      "path_template": "/d2l/awards/{OrgUnitId}/#/roster",
+      "student_accessible_reported": false,
+      "source_line": 31
+    },
+    {
+      "id": "checklists_view",
+      "label": "Checklists - View",
+      "path_template": "/d2l/lms/checklist/viewchecklists.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 32
+    },
+    {
+      "id": "checklists_manage",
+      "label": "Checklists - Manage",
+      "path_template": "/d2l/lms/checklist/checklists.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 33
+    },
+    {
+      "id": "competencies_view",
+      "label": "Competencies - View",
+      "path_template": "/d2l/lms/competencies/competency_results.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 34
+    },
+    {
+      "id": "competencies_manage",
+      "label": "Competencies - Manage",
+      "path_template": "/d2l/lms/competencies/competency_list.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 35
+    },
+    {
+      "id": "grades_view",
+      "label": "Grades - View",
+      "path_template": "/d2l/lms/grades/my_grades/main.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 36
+    },
+    {
+      "id": "grades_manage",
+      "label": "Grades - Manage",
+      "path_template": "/d2l/lms/grades/admin/manage/gradeslist.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 37
+    },
+    {
+      "id": "quick_eval",
+      "label": "Quick Eval",
+      "path_template": "/d2l/le/{OrgUnitId}/quickeval/",
+      "student_accessible_reported": false,
+      "source_line": 38
+    },
+    {
+      "id": "question_library",
+      "label": "Question Library",
+      "path_template": "/d2l/lms/qc/main_frame.d2l?ctid=1&ti=32000&ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 39
+    },
+    {
+      "id": "quizzes_view",
+      "label": "Quizzes - View",
+      "path_template": "/d2l/lms/quizzing/user/quizzes_list.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 40
+    },
+    {
+      "id": "quizzes_manage",
+      "label": "Quizzes - Manage",
+      "path_template": "/d2l/lms/quizzing/admin/quizzes_manage.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 41
+    },
+    {
+      "id": "rubrics",
+      "label": "Rubrics",
+      "path_template": "/d2l/lp/rubrics/list.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 42
+    },
+    {
+      "id": "self_assessments",
+      "label": "Self Assessments",
+      "path_template": "/d2l/lms/selfassess/admin/selfassess_manage.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 43
+    },
+    {
+      "id": "surveys",
+      "label": "Surveys",
+      "path_template": "/d2l/lms/survey/admin/surveys_manage.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 44
+    },
+    {
+      "id": "announcements",
+      "label": "Announcements",
+      "path_template": "/d2l/lms/news/main.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": true,
+      "source_line": 45
+    },
+    {
+      "id": "discussions",
+      "label": "Discussions",
+      "path_template": "/d2l/le/{OrgUnitId}/discussions/List",
+      "student_accessible_reported": true,
+      "source_line": 46
+    },
+    {
+      "id": "intelligence_agents",
+      "label": "Intelligence Agents",
+      "path_template": "/d2l/lms/IntelligentAgents/AgentList.d2l?ou={OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 47
+    },
+    {
+      "id": "tools",
+      "label": "Tools",
+      "path_template": "/d2l/lp/tools/orgUnits/{OrgUnitId}",
+      "student_accessible_reported": false,
+      "source_line": 48
+    }
+  ]
+}

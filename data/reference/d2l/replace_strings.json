@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "catalog_type": "brightspace_replace_strings",
+  "source": {
+    "repository": "GC-STEM/automation",
+    "path": "docs/d2l/d2l_replace_strings.md",
+    "commit": "50393d3269571e7d87aa41aff1be47c2f2d2cebe",
+    "git_blob_sha": "f810bfdd1f0df7b4b9c51a7f9ccfa07a7b53afe2",
+    "url": "https://github.com/GC-STEM/automation/blob/50393d3269571e7d87aa41aff1be47c2f2d2cebe/docs/d2l/d2l_replace_strings.md",
+    "sections": [
+      "Organization Replace Strings",
+      "User Replace Strings"
+    ]
+  },
+  "documentation": {
+    "title": "Automatically customize course content using replace strings",
+    "url": "https://community.d2l.com/brightspace/kb/articles/6105-automatically-customize-course-content-using-replace-strings",
+    "reviewed_date": "2026-10-17"
+  },
+  "source_current_values": "unresolved_placeholders",
+  "verification": {
+    "snhu_token_behavior_verified": false
+  },
+  "evaluation_rules": {
+    "content_topics": {
+      "evaluation": "when_first_entered",
+      "placeholder_record_retained": false,
+      "excluded_scopes": [
+        "user",
+        "role"
+      ]
+    },
+    "other_tools": {
+      "evaluation": "on_each_view",
+      "support_is_tool_specific": true
+    }
+  },
+  "context_labels": {
+    "brightspace_editor": "Tools using Brightspace Editor; Content exclusions still apply.",
+    "metadata": "Metadata",
+    "intelligent_agents": "Intelligent Agents",
+    "course_banner": "Course banner customization"
+  },
+  "tokens": [
+    {
+      "name": "OrgId",
+      "token": "{OrgId}",
+      "scope": "organization",
+      "source_group": "organization",
+      "description": "Organization identifier.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [],
+      "source_line": 56
+    },
+    {
+      "name": "OrgName",
+      "token": "{OrgName}",
+      "scope": "organization",
+      "source_group": "organization",
+      "description": "Organization name.",
+      "documented_contexts": [
+        "brightspace_editor",
+        "metadata",
+        "intelligent_agents"
+      ],
+      "excluded_contexts": [],
+      "source_line": 57
+    },
+    {
+      "name": "OrgUnitId",
+      "token": "{OrgUnitId}",
+      "scope": "org_unit",
+      "source_group": "organization",
+      "description": "Org unit identifier.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [],
+      "source_line": 58
+    },
+    {
+      "name": "OrgUnitName",
+      "token": "{OrgUnitName}",
+      "scope": "org_unit",
+      "source_group": "organization",
+      "description": "Org unit name.",
+      "documented_contexts": [
+        "brightspace_editor",
+        "metadata",
+        "intelligent_agents"
+      ],
+      "excluded_contexts": [],
+      "source_line": 59
+    },
+    {
+      "name": "OrgUnitCode",
+      "token": "{OrgUnitCode}",
+      "scope": "org_unit",
+      "source_group": "organization",
+      "description": "Org unit code.",
+      "documented_contexts": [
+        "brightspace_editor",
+        "intelligent_agents"
+      ],
+      "excluded_contexts": [],
+      "source_line": 60
+    },
+    {
+      "name": "OrgUnitTypeId",
+      "token": "{OrgUnitTypeId}",
+      "scope": "org_unit",
+      "source_group": "organization",
+      "description": "Org unit type identifier.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [],
+      "source_line": 61
+    },
+    {
+      "name": "OrgUnitPath",
+      "token": "{OrgUnitPath}",
+      "scope": "org_unit",
+      "source_group": "organization",
+      "description": "Org unit file path.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [],
+      "source_line": 62
+    },
+    {
+      "name": "UserId",
+      "token": "{UserId}",
+      "scope": "user",
+      "source_group": "user",
+      "description": "Brightspace user identifier.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 68
+    },
+    {
+      "name": "UserName",
+      "token": "{UserName}",
+      "scope": "user",
+      "source_group": "user",
+      "description": "User's full name or login username.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 69,
+      "source_description": "D2L username entered to log on"
+    },
+    {
+      "name": "OrgDefinedId",
+      "token": "{OrgDefinedId}",
+      "scope": "user",
+      "source_group": "user",
+      "description": "Institution-defined user identifier.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 70
+    },
+    {
+      "name": "FirstName",
+      "token": "{FirstName}",
+      "scope": "user",
+      "source_group": "user",
+      "description": "User's given name.",
+      "documented_contexts": [
+        "metadata",
+        "course_banner"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 71
+    },
+    {
+      "name": "LastName",
+      "token": "{LastName}",
+      "scope": "user",
+      "source_group": "user",
+      "description": "User's family name.",
+      "documented_contexts": [
+        "metadata"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 72
+    },
+    {
+      "name": "Email",
+      "token": "{Email}",
+      "scope": "user",
+      "source_group": "user",
+      "description": "User's internal email address.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 73,
+      "source_description": "User's primary email address (e.g. @school.edu)"
+    },
+    {
+      "name": "ExternalEmail",
+      "token": "{ExternalEmail}",
+      "scope": "user",
+      "source_group": "user",
+      "description": "User's external email address.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 74
+    },
+    {
+      "name": "InternalEmail",
+      "token": "{InternalEmail}",
+      "scope": "user",
+      "source_group": "user",
+      "description": "User's internal email address.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 75
+    },
+    {
+      "name": "RoleId",
+      "token": "{RoleId}",
+      "scope": "role",
+      "source_group": "user",
+      "description": "Current user's role identifier.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 76
+    },
+    {
+      "name": "RoleCode",
+      "token": "{RoleCode}",
+      "scope": "role",
+      "source_group": "user",
+      "description": "Current user's role code.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 77
+    },
+    {
+      "name": "RoleName",
+      "token": "{RoleName}",
+      "scope": "role",
+      "source_group": "user",
+      "description": "Current user's role name.",
+      "documented_contexts": [
+        "brightspace_editor"
+      ],
+      "excluded_contexts": [
+        "content_topics"
+      ],
+      "source_line": 78
+    }
+  ]
+}

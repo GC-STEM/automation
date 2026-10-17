@@ -1,11 +1,16 @@
 # Replace Strings for D2L Course '{OrgUnitName}' at {OrgName}
 
-## Course URLs
+## Brightspace Course URLs
+
+Base URL: https://learn.snhu.edu/d2l/
+Alt. URL: https://snhu.brightspace.com/d2l/
 
 Course URLs for D2L Course '{OrgUnitName}' at {OrgName}
 
 | **Course Page** | **URL** | **SA** |
 | --- | --- | --- |
+| User Home | https://learn.snhu.edu/d2l/lp/home | Yes |
+| Advanced Course Search | https://learn.snhu.edu/d2l/le/manageCourses/search/6606 | Yes |
 | Availability Date Defaults | https://learn.snhu.edu/d2l/le/availabilitydatedefaults/{OrgUnitId} | No |
 | Course Offering Information | https://learn.snhu.edu/d2l/lp/manageCourses/course_offering_info_viewedit.d2l?ou={OrgUnitId} | No |
 | Homepages | https://learn.snhu.edu/d2l/lp/homepages/{OrgUnitId}/list?fromCMC=1 | No |
@@ -47,7 +52,7 @@ Course URLs for D2L Course '{OrgUnitName}' at {OrgName}
 | Intelligence Agents | https://learn.snhu.edu/d2l/lms/IntelligentAgents/AgentList.d2l?ou={OrgUnitId} | No |
 | Tools | https://learn.snhu.edu/d2l/lp/tools/orgUnits/{OrgUnitId} | No |
 
-*Note*. SA = Student Accessible
+*Note*. SA = Student Accessible; alternate base URL:
 
 ## Organization Replace Strings
 

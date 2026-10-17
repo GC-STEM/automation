@@ -608,7 +608,7 @@ class ConfigurationTests(unittest.TestCase):
         settings = load_settings(example, environment={}, cwd=self.invocation)
         self.assertEqual(
             settings.courses.file,
-            package_root / "data/processed/gc-stem_d2l_courses.xlsx",
+            package_root / "data/processed/d2l_courses.xlsx",
         )
         self.assertEqual(settings.search.mode, "all")
 

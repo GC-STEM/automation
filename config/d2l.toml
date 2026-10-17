@@ -9,7 +9,7 @@ provider = "browser"
 auth = "interactive"
 
 [courses]
-file = "../data/processed/gc-stem_d2l_courses.xlsx"
+file = "../data/processed/d2l_courses.xlsx"
 format = "xlsx"
 sheet = "D2L"
 name_column = "CourseName"

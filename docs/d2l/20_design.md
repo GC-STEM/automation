@@ -298,7 +298,7 @@ A raw field may be HTML-entity decoded for parsed attribute values or rendered b
 These commands are **planned**, not available in the current snapshot:
 
 ~~~powershell
-gc-stem d2l courses extract-urls --source "data/raw/gc-stem_d2l_courses.xlsx" --destination "data/processed/gc-stem_d2l_courses.xlsx" --sheet "D2L"
+gc-stem d2l courses extract-urls --source "data/raw/d2l_courses.xlsx" --destination "data/processed/d2l_courses.xlsx" --sheet "D2L"
 gc-stem d2l search --config "config/d2l.local.toml" --validate-only
 gc-stem d2l search --config "config/d2l.local.toml"
 ~~~
@@ -451,7 +451,7 @@ provider = "browser"
 auth = "interactive"
 
 [courses]
-file = "../data/processed/gc-stem_d2l_courses.xlsx"
+file = "../data/processed/d2l_courses.xlsx"
 format = "xlsx"
 sheet = "D2L"
 name_column = "CourseName"

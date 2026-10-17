@@ -50,7 +50,7 @@ The module entry point is also available as `python -m gc_stem`.
 From the repository root, prepare a new workbook destination:
 
 ```powershell
-python -m gc_stem d2l courses extract-urls --source "data/raw/gc-stem_d2l_courses.xlsx" --destination "data/processed/gc-stem_d2l_courses.xlsx" --sheet "D2L"
+python -m gc_stem d2l courses extract-urls --source "data/raw/d2l_courses.xlsx" --destination "data/processed/d2l_courses.xlsx" --sheet "D2L"
 ```
 
 An existing destination is refused unless `--overwrite` is explicitly added.

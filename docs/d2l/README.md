@@ -59,7 +59,7 @@ Repository contents were fetched from GitHub on October 16, 2026. The `main` bra
 | Other current D2L modules and `tests/d2l` files are empty. | Authentication, crawling, searching, reporting, and D2L tests are planned capabilities. |
 | `src/gc-stem/d2l/old` contains earlier experiments. | It is reference material, not the production implementation or an SNHU login solution. |
 | `config/d2l.toml` selects browser/interactive access. | It supplies useful draft defaults, but its referenced `data/courses.csv` does not exist in the snapshot. |
-| Raw and processed `gc-stem_d2l_courses.xlsx` files exist. | The proposed first inventory adapter supports the existing Excel workflow. |
+| Raw and processed `d2l_courses.xlsx` files exist. | The proposed first inventory adapter supports the existing Excel workflow. |
 | `pyproject.toml` configures development tools but has no build or project metadata. | Package installation and the proposed `gc-stem` command require construction work. |
 | The package directory is named `gc-stem`. | Rename it to `gc_stem` for normal Python import syntax. |
 | The root README and some CI checks retain course-template content. | General repository cleanup is a separate prerequisite, not completed by these drafts. |
