@@ -48,7 +48,7 @@ def _parser() -> argparse.ArgumentParser:
     extract.add_argument("--source", type=Path, required=True)
     extract.add_argument("--destination", type=Path, required=True)
     extract.add_argument("--sheet", default="D2L")
-    extract.add_argument("--name-column", default="CourseName")
+    extract.add_argument("--name-column", default="D2l_course_name")
     extract.add_argument("--url-column", default="CourseURL")
     extract.add_argument("--overwrite", action="store_true")
     search = commands.add_parser(

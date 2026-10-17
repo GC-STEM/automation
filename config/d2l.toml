@@ -12,7 +12,7 @@ auth = "interactive"
 file = "../data/processed/d2l_courses.xlsx"
 format = "xlsx"
 sheet = "D2L"
-name_column = "CourseName"
+name_column = "D2l_course_name"
 url_column = "CourseURL"
 
 [search]

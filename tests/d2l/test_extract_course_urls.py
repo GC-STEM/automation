@@ -45,7 +45,7 @@ class WorkbookExtractionTests(unittest.TestCase):
         workbook = Workbook()
         sheet = workbook.active
         sheet.title = "D2L"
-        headers = ["Program", "CourseName"]
+        headers = ["Program", "D2l_course_name"]
         if with_url:
             headers.append("CourseURL")
         sheet.append(headers)
@@ -567,7 +567,7 @@ class WorkbookExtractionTests(unittest.TestCase):
         workbook = Workbook()
         sheet = workbook.active
         sheet.title = "D2L"
-        sheet.append(["CourseName"])
+        sheet.append(["D2l_course_name"])
         for row, identifier in enumerate(("123", "456"), start=2):
             sheet.cell(row, 1, f"Course {identifier}").hyperlink = (
                 f"{TENANT}/d2l/p/home/{identifier}"

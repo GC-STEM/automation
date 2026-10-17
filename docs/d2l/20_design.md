@@ -92,7 +92,7 @@ Standard library TOML/CSV/JSON/pathlib/urllib parsing plus openpyxl for Excel. N
 
 #### Algorithms and Logic
 
-For Excel search, read `CourseURL` and `CourseName` from the configured worksheet. Accept an optional configured OrgUnitID column. For CSV, read `org_unit_id` and optional `course_name`/`course_url`.
+For Excel search, read `CourseURL` and `D2l_course_name` from the configured worksheet. Accept an optional configured OrgUnitID column. For CSV, read `org_unit_id` and optional `course_name`/`course_url`.
 
 Normalize IDs as positive decimal strings. Accept Excel numeric IDs only if integral; reject booleans, fractions, nonpositive values, and ambiguous scientific-notation strings. Derive IDs only from recognized tenant course-home routes, including the current inventory's `/d2l/p/home/ID` form and `/d2l/home/ID`. Any additional form requires an explicit parser/test.
 
@@ -454,7 +454,7 @@ auth = "interactive"
 file = "../data/processed/d2l_courses.xlsx"
 format = "xlsx"
 sheet = "D2L"
-name_column = "CourseName"
+name_column = "D2l_course_name"
 url_column = "CourseURL"
 
 [search]

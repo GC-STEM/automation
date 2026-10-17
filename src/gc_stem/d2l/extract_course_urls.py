@@ -180,7 +180,7 @@ def extract_course_urls(
     destination: str | os.PathLike[str],
     *,
     sheet_name: str = "D2L",
-    name_column: str = "CourseName",
+    name_column: str = "D2l_course_name",
     url_column: str = "CourseURL",
     overwrite: bool = False,
 ) -> ExtractionResult:
@@ -262,7 +262,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("source", type=Path, help="Source .xlsx workbook")
     parser.add_argument("destination", type=Path, help="Processed .xlsx path")
     parser.add_argument("--sheet-name", default="D2L")
-    parser.add_argument("--name-column", default="CourseName")
+    parser.add_argument("--name-column", default="D2l_course_name")
     parser.add_argument("--url-column", default="CourseURL")
     parser.add_argument("--overwrite", action="store_true")
     arguments = parser.parse_args(argv)

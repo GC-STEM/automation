@@ -114,7 +114,7 @@ class CourseSettings:
     """Store a resolved inventory path, format, and column mappings.
 
     sheet applies to Excel. CSV defaults use org_unit_id, course_name, and
-    course_url. Excel defaults use CourseName/CourseURL and no ID column.
+    course_url. Excel defaults use D2l_course_name/CourseURL and no ID column.
     An explicit format takes precedence over the filename extension.
     """
 
@@ -390,7 +390,7 @@ def _course_settings(
         _choice(format_value, "courses.format", get_args(CourseFormat)),
     )
     excel = format_name == "xlsx"
-    name_default = "CourseName" if excel else "course_name"
+    name_default = "D2l_course_name" if excel else "course_name"
     url_default = "CourseURL" if excel else "course_url"
     id_default = None if excel else "org_unit_id"
     id_value = values.get("courses.id_column", id_default)

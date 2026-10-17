@@ -508,7 +508,7 @@ class ConfigurationTests(unittest.TestCase):
         settings = self.load()
         self.assertEqual(settings.courses.format, "xlsx")
         self.assertEqual(settings.courses.sheet, "D2L")
-        self.assertEqual(settings.courses.name_column, "CourseName")
+        self.assertEqual(settings.courses.name_column, "D2l_course_name")
         self.assertEqual(settings.courses.url_column, "CourseURL")
         self.assertIsNone(settings.courses.id_column)
         explicit = self.load(overrides={"courses.id_column": " OrgUnitID "})

@@ -52,7 +52,7 @@ class CourseInventoryTests(unittest.TestCase):
     def excel(
         self,
         rows: list[tuple[object, ...]],
-        headers: tuple[object, ...] = ("CourseName", "CourseURL"),
+        headers: tuple[object, ...] = ("D2l_course_name", "CourseURL"),
         sheet: str = "D2L",
     ) -> Path:
         """Write a minimal workbook with explicit stored cell values."""
@@ -137,7 +137,7 @@ class CourseInventoryTests(unittest.TestCase):
         """An explicit ID can fill a blank URL cell after preparation."""
         path = self.excel(
             [("Course", None, 123.0)],
-            headers=("CourseName", "CourseURL", "OrgUnitID"),
+            headers=("D2l_course_name", "CourseURL", "OrgUnitID"),
         )
         course = self.load(path, {"courses.id_column": "OrgUnitID"}).courses[0]
         self.assertEqual(course.org_unit_id, "123")
@@ -179,7 +179,7 @@ class CourseInventoryTests(unittest.TestCase):
             with self.subTest(value=value):
                 path = self.excel(
                     [("Course", None, value)],
-                    headers=("CourseName", "CourseURL", "OrgUnitID"),
+                    headers=("D2l_course_name", "CourseURL", "OrgUnitID"),
                 )
                 with self.assertRaises(InventoryError):
                     self.load(path, {"courses.id_column": "OrgUnitID"})
@@ -188,7 +188,7 @@ class CourseInventoryTests(unittest.TestCase):
         """Fifteen-digit numbers and larger text IDs remain usable."""
         path = self.excel(
             [("Numeric", None, 10**15 - 1), ("Text", None, "1" * 16)],
-            headers=("CourseName", "CourseURL", "OrgUnitID"),
+            headers=("D2l_course_name", "CourseURL", "OrgUnitID"),
         )
         inventory = self.load(path, {"courses.id_column": "OrgUnitID"})
         self.assertEqual(
@@ -332,14 +332,14 @@ class CourseInventoryTests(unittest.TestCase):
                 else:
                     path = self.excel(
                         [("First", "Second", f"{TENANT}/d2l/home/123")],
-                        headers=("CourseName", " coursename ", "CourseURL"),
+                        headers=("D2l_course_name", " coursename ", "CourseURL"),
                     )
                 with self.assertRaisesRegex(InventoryError, "Duplicate"):
                     self.load(path)
 
     def test_missing_url_header_gives_preparation_instruction(self) -> None:
         """The loader does not extract links or modify an unprepared file."""
-        path = self.excel([("Course",)], headers=("CourseName",))
+        path = self.excel([("Course",)], headers=("D2l_course_name",))
         original = path.read_bytes()
         with self.assertRaisesRegex(InventoryError, "extract_course_urls"):
             self.load(path)
@@ -520,7 +520,7 @@ class CourseInventoryTests(unittest.TestCase):
             with self.subTest(identifier=identifier, url=url):
                 path = self.excel(
                     [("Course", url, identifier)],
-                    headers=("CourseName", "CourseURL", "OrgUnitID"),
+                    headers=("D2l_course_name", "CourseURL", "OrgUnitID"),
                 )
                 with self.assertRaises(InventoryError):
                     self.load(path, {"courses.id_column": "OrgUnitID"})

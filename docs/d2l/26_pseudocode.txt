@@ -270,15 +270,15 @@ END READ_WITH_RECOVERY
 START PREPARE_COURSE_URLS
 
     # Inputs: source workbook, destination workbook, configured worksheet,
-    # configured CourseName/CourseURL headers, explicit overwrite choice.
+    # configured D2l_course_name/CourseURL headers, explicit overwrite choice.
     # Output: processed workbook and number of hyperlink targets copied.
 
     VALIDATE source exists, sheet exists, headers are unique and usable
     VALIDATE source/destination identity and overwrite choice
     OPEN workbook with features appropriate to the supported XLSX contract
 
-    FIND CourseName header
-    IF CourseName header is missing
+    FIND D2l_course_name header
+    IF D2l_course_name header is missing
         RAISE InventoryError
     END IF
 
@@ -290,7 +290,7 @@ START PREPARE_COURSE_URLS
     LET copied_count = 0
 
     FOR EACH data row
-        LET hyperlink = CourseName cell's external hyperlink object
+        LET hyperlink = D2l_course_name cell's external hyperlink object
         IF hyperlink exists AND hyperlink has a nonempty target
             COPY target to the row's CourseURL cell
             INCREMENT copied_count

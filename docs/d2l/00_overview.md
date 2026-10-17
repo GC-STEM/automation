@@ -49,7 +49,7 @@ Separate adapters read each supported Brightspace tool. They return course-autho
 
 ### Major Capabilities
 
-* Prepare the existing Excel course inventory by extracting `CourseName` hyperlinks into `CourseURL`.
+* Prepare the existing Excel course inventory by extracting `D2l_course_name` hyperlinks into `CourseURL`.
 * Search a validated, explicit course list without discovering unrelated courses.
 * Search supported authored material across multiple Brightspace tools.
 * Find visible text and strings in HTML or URL attributes.

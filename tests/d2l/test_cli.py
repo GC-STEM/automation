@@ -135,7 +135,7 @@ def test_cli_preparation_uses_explicit_workbook_paths(
     workbook = Workbook()
     sheet = workbook.active
     sheet.title = "D2L"
-    sheet.append(["CourseName"])
+    sheet.append(["D2l_course_name"])
     sheet.append(["Course"])
     sheet["A2"].hyperlink = "https://tenant.example/d2l/p/home/123"
     workbook.save(source)
