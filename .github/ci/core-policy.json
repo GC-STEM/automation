@@ -1,6 +1,6 @@
 {
   "required_files": [
-    "README.md", "LICENSE", ".gitattributes", ".editorconfig",
+    "README.md", "LICENSE.md", ".gitattributes", ".editorconfig",
     ".gitignore", "pyproject.toml", ".github/CODEOWNERS",
     ".github/ci/README.md", ".github/ci/requirements.txt",
     ".github/ci/check_repository.py", ".github/ci/check_readme_commands.py",
