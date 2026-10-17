@@ -13,7 +13,7 @@ concurrency:
 jobs:
   prepare:
     name: Test and package Python distributions
-    if: github.repository_owner == "GC-STEM"
+    if: github.repository_owner == 'GC-STEM'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
@@ -89,7 +89,7 @@ jobs:
         run: |
           {
             printf "## Release preparation\n\n"
-            printf "Source commit: `%s`\n\n" "$SOURCE_SHA"
+            printf "Source commit: %s\n\n" "$SOURCE_SHA"
             printf "[Download verified distributions](%s)\n\n" \
               "$ARTIFACT_URL"
             printf "Prepared for review; publication is a separate step.\n"
