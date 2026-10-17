@@ -1,18 +1,15 @@
 # GC-STEM Automation
 
-Reusable tools, scripts, and workflows for GC-STEM course
-administration, repository management, and maintenance.
+Reusable tools, scripts, and workflows for collecting and comparing data to support GC-STEM course administration, repository management, and
+maintenance.
 
-This project is intended for administrators, maintainers, and course
-developers. It provides a shared Python library and the `gc-stem`
-command-line interface. D2L Brightspace is the first toolset; additional
-capabilities will be added as requirements are defined.
+This project serves administrators, maintainers, and course developers. It provides a shared Python library and the `gc-stem` command-line interface. Initial integrations focus on read-only data retrieval through APIs and authenticated browsers.
 
 ## Table of Contents <!-- omit from toc -->
 
 1. [Project status](#project-status)
-2. [Get started](#get-started)
-3. [D2L tools](#d2l-tools)
+2. [Systems in scope](#systems-in-scope)
+3. [Get started](#get-started)
 4. [Repository structure](#repository-structure)
 5. [Development and checks](#development-and-checks)
 6. [Configuration and data](#configuration-and-data)
@@ -20,25 +17,28 @@ capabilities will be added as requirements are defined.
 
 ## Project status
 
-**Active development.** Availability varies by toolset.
+**Active development.** Implementation and live access verification vary by system. System documentation is the home for requirements, authentication setup, commands, implementation status, and limitations.
 
-| Capability | Current status |
-| --- | --- |
-| D2L workbook preparation | Available: extract course hyperlinks into a `CourseURL` column. |
-| D2L configuration and course inventory validation | Available for supported Excel and CSV inputs. |
-| D2L search, coverage, and reporting components | Implemented and tested with synthetic clients. |
-| Live Brightspace search | Pending browser authentication and tenant-specific tool adapters. |
+## Systems in scope
 
-See the [D2L documentation](docs/d2l/README.md) for requirements and design.
-The [implementation status](docs/d2l/50_implementation_status.md) identifies
-available commands and remaining work.
+These are the identified data sources. Integration work is added as requirements and institutional access are confirmed.
+
+| System | System type | Documentation |
+| --- | --- | --- |
+| Brightspace | Learning management system (LMS) | [docs/d2l/](docs/d2l/) |
+| Kuali | Curriculum management (CM) | [docs/kuali/](docs/kuali/) |
+| Banner | Student information system (SIS) | Planned |
+| SharePoint | Enterprise content management (ECM) | [docs/sharepoint/](docs/sharepoint/) |
+| Power BI | Business intelligence (BI) | [docs/powerbi/](docs/powerbi/) |
+| Bookstore | E-commerce | [docs/bookstore/](docs/bookstore/) |
+| ServiceNow | IT service management (ITSM) | [docs/servicenow/](docs/servicenow/) |
+| GitHub | Source code management (SCM) | [docs/github/](docs/github/) |
 
 ## Get started
 
 You need Git and Python 3.12 or later.
 
-Run these commands in a terminal. Examples use `python` for the required
-Python version; use `python3` before activating the virtual environment if
+Run these commands in a terminal. Examples use `python` for the required Python version; use `python3` before activating the virtual environment if
 that is your system's Python command.
 
 Clone the repository and create a virtual environment:
@@ -64,52 +64,29 @@ python -m pip install -e ".[dev]"
 gc-stem --help
 ```
 
-Editable installation makes changes under `src/` available in the active
-environment. Reinstall after changing dependencies or package entry points.
+Editable installation makes changes under `src/` available in the active environment. Reinstall after changing dependencies or package entry points.
 
 You can also run the CLI as `python -m gc_stem`.
-
-## D2L tools
-
-Run the following commands from the repository root.
-
-View workbook preparation options:
-
-```bash
-gc-stem d2l courses extract-urls --help
-```
-
-Review [config/d2l.toml](config/d2l.toml), including the course inventory path,
-worksheet, column names, and example search terms. Paths inside this TOML
-file are relative to the configuration file's directory.
-
-Validate the local configuration and course inventory:
-
-```bash
-gc-stem d2l search --config config/d2l.toml --validate-only
-```
-
-Validation checks local inputs and output access. It does not connect to
-Brightspace or establish search coverage.
-
-For workbook extraction commands, supported overrides, and search behavior,
-see [D2L implementation status](docs/d2l/50_implementation_status.md).
-Live Brightspace search will become available after the browser provider and
-tool adapters are implemented and verified.
 
 ## Repository structure
 
 | Location | Purpose |
 | --- | --- |
-| [src/gc_stem/](src/gc_stem/) | Importable Python package and shared CLI. |
-| [src/gc_stem/d2l/](src/gc_stem/d2l/) | D2L Brightspace toolset. |
+| [src/gc_stem/](src/gc_stem/) | Importable Python library and shared CLI. |
+| [docs/](docs/) | System requirements, design, usage, and status. |
+| [tests/](tests/) | Automated tests organized by system and integration scope. |
 | [scripts/](scripts/) | Standalone scripts and operational entry points. |
 | [config/](config/) | Nonsecret configuration and examples. |
-| [data/](data/) | Source inputs, intermediate files, and processed outputs. |
-| [docs/](docs/) | Requirements, design, usage, and implementation documentation. |
-| [tests/](tests/) | Automated tests organized by toolset. |
-| [.github/](.github/) | Repository workflows, CI checks, and maintainer configuration. |
-| [pyproject.toml](pyproject.toml) | Package metadata, dependencies, and development settings. |
+| [data/](data/) | Source inputs, reference data, intermediate files, and outputs. |
+| [.github/](.github/) | Workflows, CI checks, and maintainer configuration. |
+| [pyproject.toml](pyproject.toml) | Package metadata and development settings. |
+
+Use matching system folders under `docs/<system>/`,
+`src/gc_stem/<system>/`, and `tests/<system>/`. Keep each
+system's authentication, API access, and browser access within its package.
+Add folders and modules as their documentation, code, and tests are needed.
+
+As workflows are added, place coordination that combines systems under `src/gc_stem/workflows/`, with matching documentation and tests. Extract shared helpers when multiple integrations need them.
 
 ## Development and checks
 
@@ -123,50 +100,31 @@ python -m build
 
 The build command creates a wheel and source distribution in `dist/`.
 
-GitHub Actions provides these checks and packaging workflows:
+GitHub Actions checks repository conventions, documented command syntax, documentation links, and implemented toolsets. See [workflow definitions](.github/workflows/) and [Actions results](https://github.com/GC-STEM/automation/actions).
 
-| Workflow | Purpose |
-| --- | --- |
-| [Core Validation](.github/workflows/ci.yml) | Validate repository configuration, CI safeguards, and workflow syntax. |
-| [D2L local checks](.github/workflows/d2l.yml) | Lint, test, build, and check CLI entry points on Windows and Linux. |
-| [Documentation Command Syntax](.github/workflows/readme-commands.yml) | Check documented Bash command syntax. |
-| [Internal Links](.github/workflows/internal-links.yml) | Check local documentation links and supported heading anchors. |
-| [External Links](.github/workflows/external-links.yml) | Check external documentation links. |
-| [Release preparation](.github/workflows/release.yml) | Manually build, verify installation, and upload downloadable distributions. |
-
-Review results on the project's
-[Actions page](https://github.com/GC-STEM/automation/actions).
-Release preparation produces artifacts for review; publication is a separate
-step.
+The [release preparation workflow](.github/workflows/release.yml) builds and verifies downloadable distributions for review before publication.
 
 ## Configuration and data
 
-Keep service addresses, input paths, search terms, and other operational
-settings outside source code. Store only nonsecret settings in committed
-configuration files.
+Keep service addresses, input paths, search terms, and other operational settings outside source code. Store only nonsecret settings in committed configuration files.
 
-Keep credentials, session cookies, browser profiles, and restricted inputs or
-reports out of version control. Review `.gitignore` and staged changes before
-committing local data. A file's location under `data/` does not automatically
-exclude it from Git.
+Keep credentials, session cookies, browser profiles, and restricted inputs or reports out of version control. Review `.gitignore` and staged changes before committing local data. A file's location under `data/` does not automatically exclude it from Git.
 
-Run service automation with authorized access. Review generated reports
-before sharing them.
+Run service automation with authorized access. Review generated reports before sharing them.
 
 ## Contributing and support
 
-Use [GitHub Issues](https://github.com/GC-STEM/automation/issues) to report
-bugs, request features, or discuss proposed changes. Include the relevant
-tool, Python version, command, and redacted error output.
+Use [GitHub Issues](https://github.com/GC-STEM/automation/issues) to report bugs, request features, or discuss proposed changes. Include the relevant system or workflow, Python version, command, and redacted error output.
 
-When adding a toolset:
+When adding or extending an integration:
 
-- Organize reusable code under `src/gc_stem/<toolset>/`.
-- Add matching tests, configuration examples, and documentation.
-- Extend the CLI and CI checks as needed.
+- Document requirements, usage, and implementation status under
+  `docs/<system>/`.
+- Organize reusable code under `src/gc_stem/<system>/`, including an
+  `__init__.py` file for each Python package.
+- Add matching tests under `tests/<system>/` using synthetic fixtures or   mocked service responses. Make live tests explicitly opt-in.
+- Add nonsecret configuration examples and extend the CLI and CI checks   as needed.
 - Follow PEP 8 and PEP 257 for Python code and docstrings.
-- Update this README and the toolset's implementation status when
-  availability changes.
+- Keep this README focused on project scope, shared setup, and navigation.
 
-Keep service access, configuration, processing, and reporting separate so
-future tools can reuse shared components.
+Keep service access, configuration, processing, and reporting separate so future tools can reuse shared components.
