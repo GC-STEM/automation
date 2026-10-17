@@ -2,6 +2,66 @@
 # If there is a problem with it, submit a GitHub issue or pull request to fix it.
 
 # =============================================================================
+# Build System
+# =============================================================================
+
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+
+# =============================================================================
+# Package Metadata
+# =============================================================================
+
+[project]
+name = "gc-stem-automation"
+version = "0.1.0.dev0"
+description = "Internal automation tools for GC-STEM course administration."
+requires-python = ">=3.12"
+authors = [
+    { name = "GC-STEM" },
+]
+dependencies = [
+    "openpyxl",
+    "playwright",
+]
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+]
+
+[project.urls]
+Repository = "https://github.com/GC-STEM/automation"
+
+
+# =============================================================================
+# Command-Line Entry Point
+# =============================================================================
+
+# Enable after src/gc_stem/cli.py defines main().
+# [project.scripts]
+# gc-stem = "gc_stem.cli:main"
+
+
+# =============================================================================
+# Package Discovery
+# =============================================================================
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["gc_stem", "gc_stem.*"]
+namespaces = false
+
+# =============================================================================
 # Ruff
 # =============================================================================
 
